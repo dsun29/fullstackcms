@@ -1,4 +1,7 @@
-var path = require('path');
+const path = require('path');
+const webpack = require('webpack');
+const HappyPack = require('happypack');
+
 
 module.exports = {
     entry: './app/components',
@@ -15,10 +18,7 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
-                loader: 'babel',
-                query: {
-                    presets: ['react', 'es2015']
-                }
+                loader: 'happypack/loader'
             },
             {
                 test: /\.scss$/,
@@ -37,5 +37,14 @@ module.exports = {
                 ]
             }
         ]
-    }
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoErrorsPlugin(),
+        new HappyPack({
+            loaders: ['react', 'babel?presets[]=react,presets[]=es2015']
+        }),
+        new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.UglifyJsPlugin()
+    ]
 };

@@ -1,18 +1,17 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import path from 'path';
-import React from 'react';
-import { renderToString } from 'react-dom/server';
-import { RoutingContext, match } from 'react-router';
-import createLocation from 'history/lib/createLocation';
-import routes from 'routes';
-import serverRoutes from 'server/routes';
-import { makeStore } from 'helpers';
-import { Provider } from 'react-redux';
-import { setItems, setCart } from 'actions/ProductsActions';
-
-import items from 'server/fake-database-items.js';
-import cart from 'server/fake-database-cart.js';
+import express from "express";
+import bodyParser from "body-parser";
+import path from "path";
+import React from "react";
+import {renderToString} from "react-dom/server";
+import {RoutingContext, match} from "react-router";
+import createLocation from "history/lib/createLocation";
+import routes from "routes";
+import serverRoutes from "server/routes";
+import {makeStore} from "helpers";
+import {Provider} from "react-redux";
+import {setItems, setCart} from "actions/ProductsActions";
+import items from "server/fake-database-items.js";
+import cart from "server/fake-database-cart.js";
 
 var app = express();
 
@@ -24,7 +23,7 @@ app.use((req, res) => {
     const location = createLocation(req.url);
     const store = makeStore();
 
-    match({ routes, location }, (err, redirectLocation, renderProps) => {
+    match({routes, location}, (err, redirectLocation, renderProps) => {
         if (err) {
             console.log(err);
             return res.status(500).end('Internal server error');

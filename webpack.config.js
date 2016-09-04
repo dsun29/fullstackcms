@@ -1,5 +1,7 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
+
+const HappyPack = require('happypack');
 
 module.exports = {
     devtool: 'inline-source-map',
@@ -21,7 +23,7 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
-                loaders: ['react-hot', 'babel?presets[]=react,presets[]=es2015']
+                loaders: ['happypack/loader']
             },
             {
                 test: /\.scss$/,
@@ -43,12 +45,15 @@ module.exports = {
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin()
+        new webpack.NoErrorsPlugin(),
+        new HappyPack({
+            loaders: ['babel?presets[]=react,presets[]=es2015']
+        })
     ],
     devServer: {
         hot: true,
         proxy: {
-            '*': 'http://127.0.0.1:' + (process.env.PORT || 3000)
+            '*': `http://127.0.0.1: ${(process.env.PORT || 3000)}`
         },
         host: '127.0.0.1'
     }
