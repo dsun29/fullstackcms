@@ -1,19 +1,19 @@
-import express from "express";
-import bodyParser from "body-parser";
-import path from "path";
-import React from "react";
-import {renderToString} from "react-dom/server";
-import {RoutingContext, match} from "react-router";
-import createLocation from "history/lib/createLocation";
-import routes from "routes";
-import serverRoutes from "server/routes";
-import {makeStore} from "helpers";
-import {Provider} from "react-redux";
-import {setItems, setCart} from "actions/ProductsActions";
-import items from "server/fake-database-items.js";
-import cart from "server/fake-database-cart.js";
+import express from 'express';
+import bodyParser from 'body-parser';
+import path from 'path';
+import React from 'react';
+import {Provider} from 'react-redux';
+import routes from 'routes';
+import createLocation from 'history/lib/createLocation';
+import {renderToString} from 'react-dom/server';
+import {RoutingContext, match} from 'react-router';
+import serverRoutes from './app/server/routes';
+import {makeStore} from './app/helpers';
+import {setItems, setCart} from './app/actions/ProductsActions';
+import items from './app/server/fake-database-items.js';
+import cart from './app/server/fake-database-cart.js';
 
-var app = express();
+const app = express();
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -67,4 +67,4 @@ app.use((req, res) => {
     });
 });
 
-export default app;
+module.exports = app;

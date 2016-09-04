@@ -7,6 +7,7 @@
   "rules": {
     "strict": 0,
     "indent": ["error", 4],
-    "comma-dangle": ["error", "never"]
+    "comma-dangle": ["error", "never"],
+    "object-curly-spacing": ["error", "never"]
   }
 }
