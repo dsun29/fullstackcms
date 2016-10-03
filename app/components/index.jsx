@@ -1,27 +1,29 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Router } from 'react-router';
-import createBrowserHistory from 'history/lib/createBrowserHistory';
-import routes from 'routes';
-import { makeStore } from 'helpers';
+import { Router, Route, browserHistory } from 'react-router';
+import { makeStore } from '../helpers';
 import { Provider } from 'react-redux';
-import { fromJS } from 'immutable';
-import 'css/master.scss';
+import App from './App';
+import About from './About';
+import LoginContainer from '../containers/LoginContainer'
+import SinglePostContainer from '../containers/SinglePostContainer'
+import EditorPostListContainer from '../containers/EditorPostListContainer'
 
-const history = createBrowserHistory();
 
-let initialState = window.__INITIAL_STATE__;
+const store = makeStore({UserReducer: {showDialog: false, dialogTitle:  '', dialogBody: '', showSpinner: false}});
 
-// Transform into Immutable.js collections, but leave top level keys untouched
-Object.keys(initialState)
-    .forEach(key => {
-        initialState[key] = fromJS(initialState[key]);
-    });
-
-const store = makeStore(initialState);
+var shell = document.createElement('main');
+document.body.appendChild(shell);
 
 render(
     <Provider store={store}>
-        <Router children={routes} history={history} />
+        <Router history={browserHistory}>
+	        <Route path="/" component={App}/>
+			<Route path="/about" component={About} />
+			<Route path="/login" component={LoginContainer} />
+			<Route path="/post" component={SinglePostContainer} />
+			<Route path="/me" component={EditorPostListContainer} />
+			<Route path="*" component={About} />
+		</Router>
     </Provider>,
-    document.getElementById('app'));
+    shell);

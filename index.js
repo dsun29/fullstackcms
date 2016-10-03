@@ -1,6 +1,14 @@
 'use strict';
 
-require('babel-register')({});
+require('babel-register')(
+{
+    "plugins": [
+    ["transform-runtime", {
+      "regenerator": true
+    }]
+  ]
+  
+});
 
 const server = require('./server');
 

@@ -1,17 +1,21 @@
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HappyPack = require('happypack');
 
 
 module.exports = {
-    entry: './app/components',
+    devtool: 'inline-source-map',
+    entry: [
+        './app/components'
+    ],
     output: {
         path: path.join(__dirname, 'public'),
         filename: 'bundle.js'
     },
     resolve: {
         modulesDirectories: ['node_modules', 'app'],
-        extensions: ['', '.js', '.jsx', 'scss']
+        extensions: ['', '.js', '.jsx', '.scss']
     },
     module: {
         loaders: [
@@ -41,8 +45,12 @@ module.exports = {
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
+        new HtmlWebpackPlugin({
+            title: 'Fullstack Rebel',
+            template: './app/templates/index_template.ejs'
+        }),
         new HappyPack({
-            loaders: ['react', 'babel?presets[]=react,presets[]=es2015']
+            loaders: ['babel?presets[]=react,presets[]=es2015']
         }),
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.UglifyJsPlugin()

@@ -1,17 +1,15 @@
 const path = require('path');
 const webpack = require('webpack');
-
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HappyPack = require('happypack');
 
 module.exports = {
     devtool: 'inline-source-map',
     entry: [
-        'webpack-dev-server/client?http://127.0.0.1:8080/',
-        'webpack/hot/only-dev-server',
         './app/components'
     ],
     output: {
-        path: path.join(__dirname, 'public'),
+        path: './public',
         filename: 'bundle.js'
     },
     resolve: {
@@ -46,15 +44,12 @@ module.exports = {
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
+        new HtmlWebpackPlugin({
+            title: 'Fullstack Rebel',
+            template: './app/templates/index_template.ejs'
+        }),
         new HappyPack({
             loaders: ['babel?presets[]=react,presets[]=es2015']
         })
-    ],
-    devServer: {
-        hot: true,
-        proxy: {
-            '*': `http://127.0.0.1: ${(process.env.PORT || 3000)}`
-        },
-        host: '127.0.0.1'
-    }
+    ]
 };
