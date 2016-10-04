@@ -1,7 +1,7 @@
 {
-  "name": "react-redux-fullstack-starter",
-  "version": "1.0.0",
-  "description": "React Redux Fullstack Starter",
+  "name": "Fullstack CMS",
+  "version": "0.0.1",
+  "description": "A Content Management System Made of NodeJS, MongoDB, React, Redux and Bootstrap",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --colors",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/michaelcheng429/bestactprep"
+    "url": "https://github.com/dsun29/fullstackcms"
   },
   "keywords": [],
   "author": "",
