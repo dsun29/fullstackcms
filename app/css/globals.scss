@@ -83,3 +83,270 @@
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.2); /* Black w/ opacity */
 }
+
+
+/***************************************************************************************/
+body{
+    font-size: 16px;
+    font-family: 'Merriweather Sans', arial, sans-serif;
+    color: #666666;
+    -webkit-font-smoothing: antialiased;
+}
+/*
+    Note: It is best to use a less version of this file ( see http://css2less.cc
+    For the media queries use @screen-sm-min instead of 768px.
+    For .omb_spanOr use @body-bg instead of white.
+*/
+
+@media (min-width: 768px) {
+    .omb_row-sm-offset-3 div:first-child[class*="col-"] {
+        margin-left: 25%;
+    }
+}
+
+.omb_login .omb_authTitle {
+    text-align: center;
+	line-height: 300%;
+}
+
+.omb_login .omb_socialButtons a {
+	color: white; // In yourUse @body-bg
+	opacity:0.9;
+}
+.omb_login .omb_socialButtons a:hover {
+    color: white;
+	opacity:1;
+}
+.omb_login .omb_socialButtons .omb_btn-facebook {background: #3b5998;}
+.omb_login .omb_socialButtons .omb_btn-twitter {background: #00aced;}
+.omb_login .omb_socialButtons .omb_btn-google {background: #c32f10;}
+
+
+.omb_login .omb_loginOr {
+	position: relative;
+	font-size: 1.5em;
+	color: #aaa;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+.omb_login .omb_loginOr .omb_hrOr {
+	background-color: #cdcdcd;
+	height: 1px;
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+}
+.omb_login .omb_loginOr .omb_spanOr {
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: -0.6em;
+	margin-left: -1.5em;
+	background-color: white;
+	width: 3em;
+	text-align: center;
+}
+
+.omb_login .omb_loginForm .input-group.i {
+	width: 2em;
+}
+.omb_login .omb_loginForm  .help-block {
+    color: red;
+}
+
+
+@media (min-width: 768px) {
+    .omb_login .omb_forgotPwd {
+        text-align: right;
+		margin-top:10px;
+ 	}
+}
+
+/********************************************************************************************************************/
+
+.navbar{
+    background: rgba(48, 56, 67, 0.9);
+    border-radius: 0;
+}
+
+.navbar-collapse{
+	color: #fff;
+    width: 100%;
+    z-index: 40;
+    padding: 15px inherit;
+
+    -webkit-transition: padding 0.6s ease-in-out;
+}
+
+.nav-item{
+        font-family: 'Merriweather Sans', arial, sans-serif;
+        color: #fff;
+        font-weight: normal;
+        text-transform: uppercase;
+        font-size: 13px;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #fff;
+}
+
+.navbar-nav>li>a {
+    line-height: 20px;
+}
+
+.nav-item.active {
+    color: #71c4e0;
+}
+
+.header .main-nav .nav .dropdown-menu {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    margin: 0;
+    border: none;
+    text-transform: none;
+    min-width: 180px;
+    background: #47b3d7;
+}
+
+.logo{
+    font-family: "Russo One", arial, sans-serif;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: 800;
+    font-size: 26px;
+    float: left;
+    line-height: 1.8;
+    color: #fff;
+}
+
+.logo a{
+    color: #fff;
+    text-decoration: none;
+}
+
+
+.highlight{
+    color: #71c4e0;
+}
+
+pre{
+    background-color: #000;
+    padding: 2px;
+}
+
+.post-title{
+    margin-top: 0px;
+}
+
+.post-title a {
+    color: #65758e;
+}
+
+
+.blog-list .item .meta .meta-list {
+    font-size: 14px;
+}
+
+.meta-list .post-time {
+    font-size: 16px;
+    display: inline-block;
+    text-align: center;
+    padding: 5px 15px;
+    background: #818fa5;
+    color: #fff;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin-bottom: 15px;
+}
+
+span.date {
+    font-family: 'Open Sans', arial, sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    display: block;
+}
+
+span.month {
+    font-weight: 300;
+    text-transform: uppercase;
+    padding-top: 0;
+    display: block;
+}
+.thumb {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    width: 45px;
+    height: 45px;
+}
+
+.blog-sidebar .widget.recent-posts .post-info .date {
+    color: #999999;
+    font-size: 12px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight:400;
+}
+
+
+.blog-sidebar .widget.recent-posts li {
+    position: relative;
+    padding-left: 60px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eeeeee;
+    padding-bottom: 15px;
+    min-height: 80px;
+}
+
+.updated{
+    font-size: 13px;
+    color: #999999;
+}
+
+.comment-area {
+    background: #f5f5f5;
+    padding: 30px;
+}
+
+.comment-area .comment-container {
+    margin-bottom: 60px;
+}
+
+.comment-area .title {
+    font-size: 22px;
+    font-family: "Open Sans", arial, sans-serif;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+ .comment-item {
+    margin-bottom: 30px;
+}
+
+ .comment-area .comment-container .comment-item .comment-item-box {
+    position: relative;
+    background: #fff;
+    padding: 30px;
+    padding-left: 115px;
+    margin-bottom: 15px;
+}
+
+  .comment-area .comment-container .comment-item .comment-body .time {
+    color: #999999;
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+.comment-area .comment-container .comment-item .comment-body .comment-reply-link:hover {
+    background: #65758e;
+}
+ .comment-area .comment-container .comment-item .comment-body .comment-reply-link {
+    padding: 5px 10px;
+    font-size: 13px;
+    background: #adb7c5;
+}

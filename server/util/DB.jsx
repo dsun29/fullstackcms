@@ -73,10 +73,10 @@ class DB{
         });
     }
     
-    static find(db, collectionName, condition){
+    static find(db, collectionName, condition, fields, numRows = 20, sort = 'lastModified'){
         let collection = db.collection(collectionName);
         return new Promise((resolve, reject)=>{
-            resolve(collection.find(condition).toArray());
+            resolve(collection.find(condition, fields, {limit: numRows, sort: sort}).toArray());
         });
         
     }

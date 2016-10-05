@@ -3,11 +3,12 @@ import { render } from 'react-dom';
 import { Router, Route, browserHistory } from 'react-router';
 import { makeStore } from '../helpers';
 import { Provider } from 'react-redux';
-import App from './App';
+import IndexContainer from '../containers/IndexContainer';
 import About from './About';
 import LoginContainer from '../containers/LoginContainer'
 import SinglePostContainer from '../containers/SinglePostContainer'
 import EditorPostListContainer from '../containers/EditorPostListContainer'
+import 'css/globals.scss';
 
 
 const store = makeStore({UserReducer: {showDialog: false, dialogTitle:  '', dialogBody: '', showSpinner: false}});
@@ -18,7 +19,7 @@ document.body.appendChild(shell);
 render(
     <Provider store={store}>
         <Router history={browserHistory}>
-	        <Route path="/" component={App}/>
+	        <Route path="/" component={IndexContainer}/>
 			<Route path="/about" component={About} />
 			<Route path="/login" component={LoginContainer} />
 			<Route path="/post" component={SinglePostContainer} />

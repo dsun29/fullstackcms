@@ -9,6 +9,7 @@ export const Save_Post_Action = (post) => {
             method: 'post',
             type: 'json',
             contentType: 'application/x-www-form-urlencoded',
+            withCredentials: true,
             data: post,
             error: function(err){
                  console.log('Eoooo = ' + err);
@@ -57,16 +58,17 @@ export const Save_Start_Action = (error) => {
 /*********************************************************/
 export const Load_Posts_Action = (condition) => {
 	return function (dispatch){
-		console.log(post);
+	
 		return reqwest({
             url: 'https://men-sundavy.c9users.io:8080/posts',
             method: 'get',
             type: 'json',
             contentType: 'application/x-www-form-urlencoded',
+            withCredentials: true,
             data: condition,
             error: function(err){
-                 console.log('Wrong in load posts = ' + err.stack);
-                 dispatch(LOAD_POSTS_FAIL(err));
+                 dispatch(Open_Dialog('Failed to load posts', err.responseText, function(){}));
+                 dispatch(Load_Posts_Fail_Action(err));
             },
             success: function (response) {
               	console.log(response);
@@ -85,17 +87,16 @@ export const Load_Posts_Succeed_Action = (posts) => {
 }
 
 
-export const Load_Post_Fail_Action = (error) => {
+export const Load_Posts_Fail_Action = (error) => {
 	return {
 		type: 'LOAD_POSTS_FAIL',
 		error: error
 	}
 }
 
-export const Load_Start_Action = (error) => {
+export const Load_Start_Action = () => {
 	return {
-		type: 'LOAD_POSTS_START',
-		loading: true,
-		loaded: false
+		type: 'LOAD_POSTS_START'
+		
 	}
 }

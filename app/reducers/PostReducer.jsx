@@ -1,7 +1,7 @@
 function PostReducer(state = {}, action)  {
 	switch (action.type){
 		case 'SAVE_POST_SUCCEED':
-			console.log(Object.assign({}, state, {post: action.post}));
+			
 			return Object.assign({}, state, action.post);
 												
 		case 'LOGIN_FAIL':
@@ -10,6 +10,15 @@ function PostReducer(state = {}, action)  {
 				displayname: 'Guest',
 				error: error
 			}	
+		
+		case 'LOAD_POSTS_SUCCEED':
+			console.log(Object.assign({}, state, {posts: action.posts}));
+			return Object.assign({}, state, {posts: action.posts});
+		
+		case 'LOAD_POSTS_FAIL':
+			console.log(Object.assign({}, state, {error: action.error}));
+			return Object.assign({}, state, {error: action.error});	
+			
 		default:
 			return state;	
 	}

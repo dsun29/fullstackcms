@@ -1,7 +1,7 @@
 import React from 'react'
 import { Provider, connect } from 'react-redux'
 
-import EditorPostListComponent from '../components/EditorPostListComponent'
+import IndexComponent from '../components/IndexComponent'
 
 import {Load_Posts_Action} from '../actions/PostActions'
 
@@ -17,8 +17,8 @@ const mapStateToProps = (state) =>{
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		loadPostsByAuthor: (userid) => {
-			dispatch(Load_Posts_Action({author:userid}));
+		loadPosts: (condition) => {
+			dispatch(Load_Posts_Action(condition));
 		},
 		onPostClick:(postid) => {
 			//dispatch(Load_Posts_Action({author:userid}));
@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-const EditorPostListContainer = connect(mapStateToProps, mapDispatchToProps)(EditorPostListComponent);
+const IndexContainer = connect(mapStateToProps, mapDispatchToProps)(IndexComponent);
 
 
-export default EditorPostListContainer
+export default IndexContainer

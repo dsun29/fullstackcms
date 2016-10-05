@@ -18,6 +18,11 @@ router.post('/post', (req, res) => {
     postController.save(req, res);
 });
 
+router.get('/posts', (req, res) => {
+    const postController = new PostController(req, res);
+    postController.getPosts(req, res);
+});
+
 export default function routes(app) {
     app.use('/', router);
 }

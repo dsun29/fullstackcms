@@ -23,10 +23,6 @@ const LoginComponent = ({userid, displayname, onGoogleLogin}) => {
     
 }
 
-LoginComponent.propTypes = {
-  onGoogleLogin: PropTypes.func.isRequired
-}
-
 
 //TODO: define prop types
 

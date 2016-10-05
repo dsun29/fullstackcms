@@ -66,10 +66,74 @@ class PostController extends Controller{
 		
 		
 	}
-
 	
+	getPosts(req, res){
+		
+		
+		//author: author's userid
+		//front: y or n -- whether or not is from front page
+		//keywords: searching keywords
+		
+		let author = req.query.author;
+		let session = req.session;
+		if(author != null && session != null && author == req.session.userid){ //get my own posts
+			console.log(req.session);
+			this.getPostsByCondition({"author.userid": author}, 50, res);
+			return;
+		}
+		else if(author != null && (req.query.front != null && req.query.front == 'y')){ //search by author
+			this.getPostsByCondition({"author.userid": author, published: true}, 20, res);
+			return;
+		}
+		
+		else if(req.query.front != null && req.query.front == 'y'){ //get front pages
+			
+			let condition = {published: true};
+			if(req.query.keywords != null){
+				
+				let keywords = req.query.keywords.trim();
+				if(keywords.indexOf(' ') > -1){
+					keywords = '\"' + keywords.replace(/\s/g, '\" \"') + '\"';
+				}
+				
+				condition = {published: true, "$text": {"$search": keywords}};
+				console.log(condition);
+			}
+			
+			this.getPostsByCondition(condition, 20, res);
+			return;
+		}
+		else{
+			console.log(req.session, req.sessionID);
+			this.response_server_error('Function not implemented yet');
+			return;
+		}
+	}
 	
-	
+	getPostsByCondition(condition, numRows, res){
+		
+		const context = this;
+		
+		DB.connect()
+		
+		.then(function(db){
+			DB.find(db, 'Posts', condition, {content: 0, comments: 0}, numRows, 'lastModified')
+			.then(function(results){
+				console.log(results);
+				res.send(results);
+			})
+			.catch(function(error){
+				console.log(error.stack);
+		        context.response_server_error(error.stack);
+		        return;
+			})
+		})
+		.catch(function(error){
+			console.log(error.stack);
+			context.response_server_error(error.stack);
+			return;
+		})
+	}
 	
 	
 }

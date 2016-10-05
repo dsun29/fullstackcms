@@ -20,6 +20,10 @@ class SinglePostComponent extends React.Component{
     
     handlePostTitleChange(e) {
         this.props.post.title = e.target.value;
+        this.props.post.url = e.target.value.toLowerCase().trim().replace(/\s+/g, '-');
+        this.refPostUrl.defaultValue = this.props.post.url;
+        this.refPostUrl.value = this.props.post.url;
+        console.log(this.props.post.url);
     }
     
     
@@ -59,7 +63,36 @@ class SinglePostComponent extends React.Component{
                             <FormControl 
                                 type="text" 
                                 placeholder="Post url" 
-                                value={this.props.post.url}
+                                ref={(ref) => this.refPostUrl = ref}
+                                defaultValue={this.props.post.url}
+                                onChange={this.handlePostURLChange}/>
+                          </Col>
+                        </FormGroup>
+                        
+                        <FormGroup controlId="formHorizontalThumbPHoto">
+                          <Col componentClass={ControlLabel} sm={2}>
+                            Thumb Photo
+                          </Col>
+                          <Col sm={10}>
+                            <FormControl 
+                                type="text" 
+                                placeholder="URL for your thumb photo" 
+                                ref={(ref) => this.refPostUrl = ref}
+                                defaultValue={this.props.post.url}
+                                onChange={this.handlePostURLChange}/>
+                          </Col>
+                        </FormGroup>
+                        
+                        <FormGroup controlId="formHorizontalFrontPHoto">
+                          <Col componentClass={ControlLabel} sm={2}>
+                            Front Photo
+                          </Col>
+                          <Col sm={10}>
+                            <FormControl 
+                                type="text" 
+                                placeholder="URL for your thumb photo" 
+                                ref={(ref) => this.refPostUrl = ref}
+                                defaultValue={this.props.post.url}
                                 onChange={this.handlePostURLChange}/>
                           </Col>
                         </FormGroup>
@@ -92,7 +125,8 @@ class SinglePostComponent extends React.Component{
                                         menubar: false,
                                         statusbar: false,
                                         plugins: 'link image code',
-                                        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
+                                        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code',
+
                                       }}
                               />
                             </Col>
