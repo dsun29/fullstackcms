@@ -28,7 +28,6 @@ function UserReducer(state = {}, action)  {
 															dialogTitle: action.dialogTitle,
 															dialogBody: action.dialogBody});
 				
-				console.log(new_state);
 				return  new_state;
 			
 			}

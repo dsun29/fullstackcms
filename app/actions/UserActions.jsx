@@ -26,7 +26,7 @@ export const Login_Fail_Action = (error) => {
 export function Google_Login_Action(googleReponse){
 	return function (dispatch){
 		return reqwest({
-            url: 'https://men-sundavy.c9users.io:8080/login',
+            url: 'https://men-sundavy.c9users.io:8080/api/login',
             method: 'post',
             type: 'json',
             contentType: 'application/x-www-form-urlencoded',

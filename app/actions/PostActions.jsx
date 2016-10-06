@@ -5,12 +5,12 @@ export const Save_Post_Action = (post) => {
 	return function (dispatch){
 		dispatch(Open_Spinner());
 		return reqwest({
-            url: 'https://men-sundavy.c9users.io:8080/post',
+            url: 'https://men-sundavy.c9users.io:8080/api/post',
             method: 'post',
             type: 'json',
             contentType: 'application/x-www-form-urlencoded',
             withCredentials: true,
-            data: post,
+            data: {post: post},
             error: function(err){
                  console.log('Eoooo = ' + err);
                  dispatch(Close_Spinner())
@@ -23,7 +23,6 @@ export const Save_Post_Action = (post) => {
               	dispatch(Close_Spinner());
               	dispatch(Save_Succeed_Action(response));
               	dispatch(Open_Dialog('Successfully Saved', 'The new post is successfully saved.', function(){}));
-              	
             }
 
         })
@@ -60,7 +59,7 @@ export const Load_Posts_Action = (condition) => {
 	return function (dispatch){
 	
 		return reqwest({
-            url: 'https://men-sundavy.c9users.io:8080/posts',
+            url: 'https://men-sundavy.c9users.io:8080/api/posts',
             method: 'get',
             type: 'json',
             contentType: 'application/x-www-form-urlencoded',
@@ -100,3 +99,44 @@ export const Load_Start_Action = () => {
 		
 	}
 }
+
+
+/*********************************************************/
+export const Load_Single_Post_Action = (postid) => {
+
+	return function (dispatch){
+	
+		return reqwest({
+            url: 'https://men-sundavy.c9users.io:8080/api/post/' + postid,
+            method: 'get',
+            type: 'json',
+            contentType: 'application/x-www-form-urlencoded',
+            withCredentials: true,
+            error: function(err){
+                 dispatch(Open_Dialog('Failed to load the post', err.responseText, function(){}));
+                 dispatch(Load_Single_Post_Fail_Action(err));
+            },
+            success: function (response) {
+              	console.log(response);
+              	dispatch(Load_Single_Post_Succeed_Action(response));
+            }
+
+        })
+	}
+}
+
+export const Load_Single_Post_Succeed_Action = (post) => {
+	return {
+		type: 'LOAD_SINGLE_POST_SUCCEED',
+		post: post
+	}
+}
+
+
+export const Load_Single_Post_Fail_Action = (error) => {
+	return {
+		type: 'LOAD_SINGLE_POST_FAIL',
+		error: error
+	}
+}
+

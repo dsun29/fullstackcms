@@ -22,7 +22,7 @@ render(
 	        <Route path="/" component={IndexContainer}/>
 			<Route path="/about" component={About} />
 			<Route path="/login" component={LoginContainer} />
-			<Route path="/post" component={SinglePostContainer} />
+			<Route path="/post/:postid" component={SinglePostContainer} />
 			<Route path="/me" component={EditorPostListContainer} />
 			<Route path="*" component={About} />
 		</Router>

@@ -10,7 +10,6 @@ export default class IndexComponent extends React.Component {
     }
     
     componentDidMount() {
-        console.log(this.props);
         this.props.loadPosts({front: 'y'});
     }
   
@@ -18,7 +17,7 @@ export default class IndexComponent extends React.Component {
     render() {
         return (
             <Layout>
-                <div className="container">
+                
                     <Col md={9}>
                     
                         {this.props.posts.map(post =>
@@ -68,8 +67,6 @@ export default class IndexComponent extends React.Component {
                         </FormGroup>
                     </Col>
                 
-                
-                </div>
             </Layout>
         );
     }

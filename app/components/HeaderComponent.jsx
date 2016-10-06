@@ -19,7 +19,7 @@ const HeaderComponent = ({userid, displayname}) =>
               <MenuItem>Java</MenuItem>
               <MenuItem>NodeJS</MenuItem>
               <MenuItem divider />
-              <MenuItem><Link to="post">Test Automation</Link></MenuItem>
+              <MenuItem><Link to="/post/57f18ea08c29dc33b89442fe">Test Automation</Link></MenuItem>
 
               
             </NavDropdown>

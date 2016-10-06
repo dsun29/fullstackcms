@@ -1,6 +1,7 @@
 import https from 'https'
 import locale from '../../share/util/locale'
 import DB from '../util/DB'
+import {ObjectId} from 'mongodb'
 import config from '../server.dev.config'
 import Controller from './Controller'
 
@@ -20,7 +21,7 @@ class PostController extends Controller{
 			return;
 		}
 		
-		console.log(req.body);
+		console.log('post is == ', req.body.post);
 		
 		let context = this;
 		const requiredRole = 'editor';
@@ -121,6 +122,34 @@ class PostController extends Controller{
 			.then(function(results){
 				console.log(results);
 				res.send(results);
+			})
+			.catch(function(error){
+				console.log(error.stack);
+		        context.response_server_error(error.stack);
+		        return;
+			})
+		})
+		.catch(function(error){
+			console.log(error.stack);
+			context.response_server_error(error.stack);
+			return;
+		})
+	}
+	
+	getSinglePost(req, res){
+		const context = this;
+		
+		DB.connect()
+		
+		.then(function(db){
+			DB.find(db, 'Posts', {_id: new ObjectId(req.params.postid)}, null, 2, 'lastModified')
+			.then(function(results){
+				if(results == null || results.length != 1){
+					res.statusCode = 404;
+					res.send();
+					return;
+				}
+				res.send(results[0]);
 			})
 			.catch(function(error){
 				console.log(error.stack);
