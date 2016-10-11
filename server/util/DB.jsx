@@ -1,5 +1,6 @@
 import {MongoClient} from 'mongodb';
 import config from '../server.dev.config';
+import {ObjectId} from 'mongodb'
 
 class DB{
     
@@ -84,7 +85,21 @@ class DB{
     static insert(db, collectionName, newRecord){
         let collection = db.collection(collectionName);
         return new Promise((resolve, reject)=>{
-            collection.insert(newRecord, (err, results) => {
+            collection.insert(newRecord, {upsert: true}, (err, results) => {
+             
+                if(err) reject(err);
+                else resolve(results);
+            });
+        });
+        
+    }
+    
+    static update(db, collectionName, newRecord){
+        let collection = db.collection(collectionName);
+        return new Promise((resolve, reject)=>{
+            let id = new ObjectId(newRecord._id);
+            delete newRecord._id;
+            collection.update({_id: id}, newRecord, (err, results) => {
              
                 if(err) reject(err);
                 else resolve(results);

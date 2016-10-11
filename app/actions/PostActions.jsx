@@ -8,11 +8,10 @@ export const Save_Post_Action = (post) => {
             url: 'https://men-sundavy.c9users.io:8080/api/post',
             method: 'post',
             type: 'json',
-            contentType: 'application/x-www-form-urlencoded',
             withCredentials: true,
-            data: {post: post},
+            data: {post: JSON.stringify(post)},
             error: function(err){
-                 console.log('Eoooo = ' + err);
+                 console.log('Eoooo = ', err);
                  dispatch(Close_Spinner())
                  dispatch(Save_Fail_Action(err));
                  dispatch(Open_Dialog('Failed to save post', err.stack, function(){}));
@@ -103,6 +102,11 @@ export const Load_Start_Action = () => {
 
 /*********************************************************/
 export const Load_Single_Post_Action = (postid) => {
+	
+	if(postid == null || postid == ''){
+		dispatch(Init_Post());
+		return;
+	}
 
 	return function (dispatch){
 	
@@ -140,3 +144,8 @@ export const Load_Single_Post_Fail_Action = (error) => {
 	}
 }
 
+export const Init_Post_Action = () => {
+	return {
+		type: 'INIT_POST'
+	}
+}

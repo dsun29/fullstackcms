@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import {ButtonToolbar, Button, Table} from 'react-bootstrap'
-
+import { Link } from 'react-router';
 import Layout from '../components/Layout'
 
 class EditorPostListComponent extends React.Component {
@@ -31,7 +31,7 @@ class EditorPostListComponent extends React.Component {
                     <tbody>
                         {this.props.posts.map(post =>
                             <tr key={post._id}>
-                                <td>{post.url}</td>
+                                <td><Link to={'/post/' + post._id}>{post.url}</Link></td>
                                 <td>{post.title}</td>
                                 <td>{post.published}</td>
                                 <td>{post.lastmodified}</td>

@@ -4,12 +4,6 @@ function PostReducer(state = {}, action)  {
 			
 			return Object.assign({}, state, action.post);
 												
-		case 'LOGIN_FAIL':
-			return{
-				userid: null,
-				displayname: 'Guest',
-				error: error
-			}	
 		
 		case 'LOAD_POSTS_SUCCEED':
 	
@@ -25,7 +19,11 @@ function PostReducer(state = {}, action)  {
 			
 		case 'LOAD_SINGLE_POST_FAIL':
 
-			return Object.assign({}, state, {error: action.error});			
+			return Object.assign({}, state, {error: action.error});	
+			
+		case 'INIT_POST':
+
+			return Object.assign({}, state, {post: {}, postid: ''});				
 			
 		default:
 			return state;	

@@ -5,48 +5,16 @@ import config from '../server.dev.config'
 import Controller from './Controller'
 import twitterAPI from 'node-twitter-api'
 
-let twitter = new twitterAPI({
-    consumerKey: 'abcde',
-    consumerSecret: '123456',
-    callback: 'https://men-sundavy.c9users.io:8080/'
-});
 
-class UserController extends Controller{
+class AssetsController extends Controller{
 
-	login(req, res){
-		if(typeof req != undefined){
-			this.req = req;
-		}
-		if(typeof res != undefined){
-			this.res = res;
+	getAssets(req, res){
+		if(req.session == null){
+		    res.statusCode = 401;
+		    res.send("No Auth");
 		}
 		
-		let source = req.body.source;
-		if (source == undefined || source == 'google')	{
-			return this.loginGoogle(req.body.email, req.body.tokenId);
-			
-		}
-		else if (source == 'twitter'){
-			twitter.getRequestToken(function(error, requestToken, requestTokenSecret, results){
-			    if (error) {
-			        console.log("Error getting OAuth request token : " + error);
-			        res.statusCode = 500;
-			        res.send(error);
-			        return;
-			    } else {
-			        
-			        
-			        let session = req.session;
-			        session.requestToken = requestToken;
-			        session.requestTokenSecret = requestTokenSecret;
-			        
-			        console.log('session created - ', req.session);
-			        
-			        res.send('https://twitter.com/oauth/authenticate?oauth_token=' + requestToken);
-			        return;
-			    }
-			});
-		}
+		
 
 	}
 	
@@ -170,14 +138,12 @@ class UserController extends Controller{
 	}
 	
 	twitterAccessToken(req, res){
-		let requestToken =  req.body.oauth_token; //it is the same request token
-		let oauth_verifier =  req.body.oauth_verifier;
-		
-		
+		let requestToken = req.query.oauth_token; //it is the same request token
+		let oauth_verifier = req.query.oauth_verifier;
 		let context = this;
 		twitter.getAccessToken(requestToken, req.session.requestTokenSecret, oauth_verifier, function(error, accessToken, accessTokenSecret, results) {
 		    if (error) {
-				console.log("Error getting OAuth access token : ", error, req.query);
+				console.log("Error getting OAuth request token : ", error);
 			    res.statusCode = 500;
 			    res.send(error);
 			    return;
@@ -190,7 +156,7 @@ class UserController extends Controller{
 		        //Step 4: Verify Credentials belongs here - get display name and email
 		        twitter.verifyCredentials(accessToken, accessTokenSecret, {include_email: false}, function(error, data, response) {
 				    if (error) {
-				        console.log("Error verifying OAuth access token : ", error);
+				        console.log("Error verifying OAuth request token : ", error);
 					    res.statusCode = 500;
 					    res.send(error);
 					    return;
@@ -269,30 +235,15 @@ class UserController extends Controller{
 		let twitter_oauth_token = req.body.oauth_token; //oauth_token is given by Twitter, do not change it
 		let twitter_oauth_verifier = req.body.oauth_verifier;
 		if(twitter_oauth_token != null && twitter_oauth_verifier != null){ //this is a redirect from Twitter with succesul login
-			console.log('check if session exists - ', req.session);
 			return this.twitterAccessToken(req, res);
 		}
 		
 		if(req.session != null && req.session.userid != null){ //refresh home page
-			return res.send({userid: req.session.userid, displayname: req.session.displayname});
+			return res.end({userid: req.session.userid, displayname: req.session.displayname});
 		}
-		
-		return res.send({});
-	}
-	
-	logout(req, res){
-		if(req.session){
-			req.session.destroy(function(err){
-				//TODO: handle error
-				res.send();	
-				return;
-			});
-		}
-		
-		res.send();
 	}
 	
 	
 }
 
-export default UserController;
+export default AssetsController;

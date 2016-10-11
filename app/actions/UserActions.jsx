@@ -8,12 +8,19 @@ export const Login_Action = (author, token) => {
 	}
 }
 
+
 export const Login_Succeed_Action = (userid, displayname) => {
 	return {
 		type: 'LOGIN_SUCCEED',
 		userid: userid,
 		displayname: displayname
 	}
+}
+
+export const Logout_Done_Action = () => {
+    return {
+		type: 'LOGOUT'
+    }
 }
 
 export const Login_Fail_Action = (error) => {
@@ -23,6 +30,34 @@ export const Login_Fail_Action = (error) => {
 	}
 }
 
+export function Twitter_Login_Start_Action(){
+	return function (dispatch){
+		return reqwest({
+            url: 'https://men-sundavy.c9users.io:8080/api/login',
+            method: 'post',
+            type: 'json',
+            contentType: 'application/x-www-form-urlencoded',
+            data: {"source": "twitter"},
+            error: function(err){
+                 console.log('Twitter login error = ', err);
+                 if(err.status == 200){
+                	window.location = err.responseText;
+                	return;
+                 }
+                 dispatch(Login_Fail_Action(err));
+            },
+            success: function (response) {
+              	console.log('goood = ', response);
+              	//dispatch(Login_Succeed_Action(response.userid, response.displayname));
+              	window.location = response;
+            }
+
+        })
+	}
+	
+}
+
+
 export function Google_Login_Action(googleReponse){
 	return function (dispatch){
 		return reqwest({
@@ -30,9 +65,11 @@ export function Google_Login_Action(googleReponse){
             method: 'post',
             type: 'json',
             contentType: 'application/x-www-form-urlencoded',
+            crossOrigin: true,
+			withCredentials: true,
             data: {"email": googleReponse.profileObj.email, "tokenId": googleReponse.tokenId},
             error: function(err){
-                 console.log('Eoooo = ' + err);
+                 console.log('Eoooo = ', err);
                  dispatch(Login_Fail_Action(err));
             },
             success: function (response) {
@@ -75,5 +112,66 @@ export const Close_Spinner = () => {
 	
 	return {
 		type: 'CLOSE_SPINNER'
+	}
+}
+
+/*********************************************************************************/
+
+export function State_Initialization_Action(params){
+	return function (dispatch){
+		return reqwest({
+            url: 'https://men-sundavy.c9users.io:8080/api/state',
+            method: 'post',
+            type: 'json',
+            contentType: 'application/x-www-form-urlencoded',
+            data: params,
+            error: function(err){
+                 console.log('get init state erro = ', err);
+                 if(err.status == 200){
+                	 window.location = err.responseText;
+                    return;
+                 }
+                 dispatch(Login_Fail_Action(err));
+            },
+            success: function (response) {
+              	console.log('goood = ', response);
+              	dispatch(Get_State_Succeed_Action(response));
+              	
+              	if(response != null && response.redirect != null){
+              	    window.location = response.redirect;
+              	}
+              	
+            }
+
+        })
+	}
+	
+}
+
+export const Get_State_Succeed_Action = (states) => {
+	return {
+		type: 'GET_SAVED_STATE_SUCCEED',
+		savedStates: states
+	}
+}
+
+export function Logout_Action(){
+	return function (dispatch){
+		return reqwest({
+            url: 'https://men-sundavy.c9users.io:8080/api/logout',
+            method: 'post',
+            type: 'json',
+            contentType: 'application/x-www-form-urlencoded',
+            crossOrigin: true,
+			withCredentials: true,
+            error: function(err){
+                 console.log('Log out error = ', err);
+                 dispatch(Login_Fail_Action(err));
+            },
+            success: function (response) {
+              	dispatch(Logout_Done_Action());
+            }
+
+        })
 	}
 }

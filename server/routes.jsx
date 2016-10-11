@@ -9,6 +9,19 @@ const userController = new UserController();
 router.post('/api/login', (req, res) => {
     userController.login(req, res);
 });
+
+router.post('/api/logout', (req, res) => {
+    userController.logout(req, res);
+});
+
+router.get('/twitteraccesstoken', (req, res) => {
+    userController.twitterAccessToken(req, res);
+});
+
+router.post('/api/state', (req, res) => {
+    userController.getStoredState(req, res);
+});
+
 router.get('/', (req, res)=>{
     res.sendFile(path.join(__dirname + '/../public/index.html')); 
 });

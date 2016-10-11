@@ -1,14 +1,15 @@
 import React from 'react'
 import { Provider, connect } from 'react-redux'
 
-import SinglePostComponent from '../components/SinglePostComponent'
+import PostDisplayComponent from '../components/PostDisplayComponent'
+
 
 import {Save_Post_Action, Load_Single_Post_Succeed_Action, Load_Single_Post_Action, Init_Post_Action } from '../actions/PostActions'
 import {Open_Dialog } from '../actions/UserActions'
 
 
 const mapStateToProps = (state, props) =>{
-	console.log('check state change - ', props.params.postid);
+	console.log('state - ', state);
 	
 	return {
 		userid: state.UserReducer.userid ? state.UserReducer.userid : null,
@@ -18,6 +19,7 @@ const mapStateToProps = (state, props) =>{
 		loading: state.PostReducer.loading
 		
 	}
+	
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -30,18 +32,21 @@ const mapDispatchToProps = (dispatch) => {
 		    dispatch(Save_Post_Action(post));
 		},
 		loadSinglePost: (postid) => {
-			if(postid != null && postid != ''){
+			if(postid == null || postid == ''){
+				dispatch(Init_Post_Action());
+			}
+			else{
 				dispatch(Load_Single_Post_Action(postid));
 			}
 		},
 		resetPost: () => {
-			dispatch(Init_Post_Action());
+				dispatch(Init_Post_Action());
 		}
 	}
 }
 
 
-const SinglePostContainer = connect(mapStateToProps, mapDispatchToProps)(SinglePostComponent);
+const PostDisplayContainer = connect(mapStateToProps, mapDispatchToProps)(PostDisplayComponent);
 
 
-export default SinglePostContainer
+export default PostDisplayContainer

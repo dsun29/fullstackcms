@@ -39,8 +39,13 @@ function UserReducer(state = {}, action)  {
 		case 'CLOSE_SPINNER':
 
 			return Object.assign({}, state, {showSpinner: false});
-	
-	
+			
+		case 'GET_SAVED_STATE_SUCCEED':
+			return Object.assign({}, state, action.savedStates);
+		
+		case 'LOGOUT':
+			return Object.assign({}, state, {userid: null, displayname: 'Guest'});
+		
 		default:
 			return state;	
 	}

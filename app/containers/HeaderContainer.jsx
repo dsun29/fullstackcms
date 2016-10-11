@@ -1,8 +1,7 @@
 import React from 'react'
 import { Provider, connect } from 'react-redux'
-
 import HeaderComponent from '../components/HeaderComponent'
-
+import {Logout_Action} from '../actions/UserActions'
 
 const mapStateToProps = (state) =>{
 	return {
@@ -13,9 +12,10 @@ const mapStateToProps = (state) =>{
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		loadPosts: () => {
-			dispatch(Google_Login_Action(response));
+		logout: () => {
+			dispatch(Logout_Action());
 		}
+	
 	}
 }
 

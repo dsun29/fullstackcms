@@ -1,9 +1,8 @@
 import React from 'react'
 import { Provider, connect } from 'react-redux'
-
 import EditorPostListComponent from '../components/EditorPostListComponent'
-
 import {Load_Posts_Action} from '../actions/PostActions'
+import { browserHistory } from 'react-router'
 
 
 const mapStateToProps = (state) =>{
@@ -21,8 +20,8 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(Load_Posts_Action({author:userid}));
 		},
 		onPostClick:(postid) => {
-			//dispatch(Load_Posts_Action({author:userid}));
-			//TODO: Go to singlePost page
+			console.log('clicked', postid);
+			browserHistory.push('/post/' + postid);
 		}
 	}
 }

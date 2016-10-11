@@ -12,7 +12,6 @@ class SinglePostComponent extends React.Component{
         super(props);
         this.props = props;
         
-        
         this.handlePostTitleChange = this.handlePostTitleChange.bind(this);
         this.handlePostURLChange = this.handlePostURLChange.bind(this);
         this.handlePostThumbChange = this.handlePostThumbChange.bind(this);
@@ -20,19 +19,40 @@ class SinglePostComponent extends React.Component{
         this.handlePostTagsChange = this.handlePostTagsChange.bind(this);
         this.handlePostAbstractChange = this.handlePostAbstractChange.bind(this);
         this.handlePostContentChange = this.handlePostContentChange.bind(this);
-        
+        this.handlePublished = this.handlePublished.bind(this);
         
     }
     
-    componentDidMount() {
+    componentWillMount() {
         
-        console.log('post - ', this.props.post);
-        if(this.props.postid != null && this.props.postid != ''){
-            console.log('postid', this.props.postid);
+        console.log('check state change in componentWillMount - ', this.props.postid);
+        
+        if(this.props.postid != null && this.props.postid != '' && this.props.postid != 'new'){
             this.props.loadSinglePost(this.props.postid);
         }
+        else if(this.props.postid == 'new'){
+             this.props.resetPost();
+        }
+
     }
     
+    componentWillUnmount(){
+        this.props.resetPost();
+    }
+    
+    componentWillReceiveProps(nextProps) {
+        
+        if(nextProps.postid != this.props.postid){
+            if(nextProps.postid != null && nextProps.postid != '' && nextProps.postid != 'new'){
+                this.props.loadSinglePost(nextProps.postid);
+            }
+            else if(nextProps.postid == 'new'){
+                this.props.resetPost();
+            }
+        }
+        
+    }
+
     
     handlePostTitleChange(e) {
         this.props.post.title = e.target.value;
@@ -55,6 +75,10 @@ class SinglePostComponent extends React.Component{
         this.props.post.tags = e.target.value;
     } 
     
+    handlePublished(e) {
+        this.props.post.published = e.target.checked;
+    }    
+    
     handlePostAbstractChange(e) {
         this.props.post.abstract = e.target.getContent();
         console.log('Content was updated:', e.target.getContent());
@@ -71,8 +95,11 @@ class SinglePostComponent extends React.Component{
             return (<Layout>{locale[global_config.locale].no_auth}</Layout>)
         }
         
+        if(this.props.postid != '' && this.props.postid != null && this.props.postid != 'new' && (this.props.post.title == null || this.props.post.title == '') ){
+            return null;
+        }
         
-        return (<Layout>        
+        return (<Layout key={this.props.postid}>        
                    <Form horizontal>
                         <FormGroup controlId="formHorizontalEmail">
                           <Col componentClass={ControlLabel} sm={2}>
@@ -145,7 +172,7 @@ class SinglePostComponent extends React.Component{
                     
                         <FormGroup>
                           <Col smOffset={2} sm={10}>
-                            <Checkbox>Publish</Checkbox>
+                            <Checkbox defaultChecked={this.props.post.published} onClick={this.handlePublished}>Publish</Checkbox>
                           </Col>
                         </FormGroup>
                     

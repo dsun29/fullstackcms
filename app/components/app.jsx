@@ -7,6 +7,7 @@ import IndexContainer from '../containers/IndexContainer';
 import About from './About';
 import LoginContainer from '../containers/LoginContainer'
 import SinglePostContainer from '../containers/SinglePostContainer'
+import PostDisplayContainer from '../containers/PostDisplayContainer'
 import EditorPostListContainer from '../containers/EditorPostListContainer'
 import 'css/globals.scss';
 
@@ -22,8 +23,9 @@ render(
 	        <Route path="/" component={IndexContainer}/>
 			<Route path="/about" component={About} />
 			<Route path="/login" component={LoginContainer} />
-			<Route path="/post/:postid" component={SinglePostContainer} />
+			<Route path="/post(/:postid)" component={SinglePostContainer} />
 			<Route path="/me" component={EditorPostListContainer} />
+			<Route path="/post2(/:postid)" component={PostDisplayContainer} />
 			<Route path="*" component={About} />
 		</Router>
     </Provider>,

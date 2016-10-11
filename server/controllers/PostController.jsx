@@ -21,8 +21,7 @@ class PostController extends Controller{
 			return;
 		}
 		
-		console.log('post is == ', req.body.post);
-		
+
 		let context = this;
 		const requiredRole = 'editor';
 		
@@ -35,22 +34,35 @@ class PostController extends Controller{
 				}
 				
 				//TODO: DB.insert().then()
-				let post = {};
-				post.title = req.body.title;
-				post.url = req.body.url;
+				let post = JSON.parse(req.body.post);
 				post.author = {userid: req.session.userid, email: req.session.email, name: req.session.displayname};
-				DB.insert(db, 'Posts', post)
-	  			.then(function(results){
-					console.log(results);
-					res.send(results.ops[0]); //TODO://results.xx);
-			
-				})
-				.catch(function(error) {
-					console.log(error.stack);
-		        	context.response_server_error(error.stack);
-		        	return;
-	    		});
+				post.lastmodified = new Date();
+				if(post._id == null || post._id == '' || post.id == 'new'){
+					DB.insert(db, 'Posts', post)
+		  			.then(function(results){
+						console.log(results);
+						res.send(results.ops[0]); //TODO://results.xx);
 				
+					})
+					.catch(function(error) {
+						console.log(error.stack);
+			        	context.response_server_error(error.stack);
+			        	return;
+		    		});
+				}
+				else{
+					DB.update(db, 'Posts', post)
+		  			.then(function(results){
+						console.log(results);
+						res.send({}); //TODO://results.xx);
+				
+					})
+					.catch(function(error) {
+						console.log(error.stack);
+			        	context.response_server_error(error.stack);
+			        	return;
+		    		});
+				}
 				
 			})
 			.catch(function(error) {
@@ -120,7 +132,6 @@ class PostController extends Controller{
 		.then(function(db){
 			DB.find(db, 'Posts', condition, {content: 0, comments: 0}, numRows, 'lastModified')
 			.then(function(results){
-				console.log(results);
 				res.send(results);
 			})
 			.catch(function(error){
