@@ -1,4 +1,5 @@
 import reqwest from 'reqwest'
+import config from '../../share/global_config'
 
 export const Login_Action = (author, token) => {
 	return {
@@ -33,7 +34,7 @@ export const Login_Fail_Action = (error) => {
 export function Twitter_Login_Start_Action(){
 	return function (dispatch){
 		return reqwest({
-            url: 'https://men-sundavy.c9users.io:8080/api/login',
+            url: config.service_root_url + 'api/login',
             method: 'post',
             type: 'json',
             contentType: 'application/x-www-form-urlencoded',
@@ -61,7 +62,7 @@ export function Twitter_Login_Start_Action(){
 export function Google_Login_Action(googleReponse){
 	return function (dispatch){
 		return reqwest({
-            url: 'https://men-sundavy.c9users.io:8080/api/login',
+            url: config.service_root_url + 'api/login',
             method: 'post',
             type: 'json',
             contentType: 'application/x-www-form-urlencoded',
@@ -120,7 +121,7 @@ export const Close_Spinner = () => {
 export function State_Initialization_Action(params){
 	return function (dispatch){
 		return reqwest({
-            url: 'https://men-sundavy.c9users.io:8080/api/state',
+            url: config.service_root_url + 'api/state',
             method: 'post',
             type: 'json',
             contentType: 'application/x-www-form-urlencoded',
@@ -158,7 +159,7 @@ export const Get_State_Succeed_Action = (states) => {
 export function Logout_Action(){
 	return function (dispatch){
 		return reqwest({
-            url: 'https://men-sundavy.c9users.io:8080/api/logout',
+            url: config.service_root_url + 'api/logout',
             method: 'post',
             type: 'json',
             contentType: 'application/x-www-form-urlencoded',

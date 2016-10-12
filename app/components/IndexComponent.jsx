@@ -45,6 +45,8 @@ export default class IndexComponent extends React.Component {
                                     <h3 className="post-title">
                                         <Link to={'/post2/' + post._id}>{post.title}</Link>
                                     </h3>
+                                    
+                                    {post.frontpagephoto ? <img className="frontpagephoto" src={'/' + post.frontpagephoto} /> : null}
                                 
                                     <div className="content">
                                         <p dangerouslySetInnerHTML={{__html: post.abstract}}></p>

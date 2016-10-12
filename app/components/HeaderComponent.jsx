@@ -1,5 +1,5 @@
 import React from 'react'
-import {Navbar, NavItem, MenuItem, NavDropdown, Nav} from 'react-bootstrap'
+import {Navbar, NavItem, MenuItem, NavDropdown, Nav, Glyphicon} from 'react-bootstrap'
 import { Link } from 'react-router';
 
 
@@ -58,7 +58,10 @@ const HeaderComponent = ({userid, displayname, logout}) =>
                     </li>
                     
                     
-                    {userid ?   <NavDropdown title={displayname} id="basic-nav-dropdown">
+                    {userid ?   <NavDropdown 
+                                    title={<span> <Glyphicon glyph="user" />  { displayname } </span>}
+                                    id="basic-nav-dropdown"
+                                >
                                     
                                     <li role="presentation">
                                         <Link role="menuitem"  to="/me">
@@ -73,13 +76,13 @@ const HeaderComponent = ({userid, displayname, logout}) =>
                                     
                                     <MenuItem divider />
                     
-                                    <li role="presentation"> <a onClick={()=>logout()}><i className="fa fa-times" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Log Out</a></li>
+                                    <li role="presentation"> <a onClick={()=>logout()}><i className="fa fa-sign-out fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Log Out</a></li>
                     
                                 </NavDropdown>
                     
                               : 
                               
-                              <li role="presentation"><Link to="/login">Log In</Link></li>}
+                              <li role="presentation"><Link to="/login"><Glyphicon glyph="user" /> Log In</Link></li>}
                 
                 </Nav>
             </Navbar.Collapse>    

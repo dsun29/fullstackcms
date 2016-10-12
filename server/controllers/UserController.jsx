@@ -6,8 +6,8 @@ import Controller from './Controller'
 import twitterAPI from 'node-twitter-api'
 
 let twitter = new twitterAPI({
-    consumerKey: 'abcde',
-    consumerSecret: '123456',
+    consumerKey: '9LBNDwogxgbP9nfm2jq0jRghy',
+    consumerSecret: 'UfbBZnNsnOtuDJ3EavvtF0AX1qxXxdLbkSWq8IpynG8QBpkaza',
     callback: 'https://men-sundavy.c9users.io:8080/'
 });
 

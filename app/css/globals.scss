@@ -281,6 +281,7 @@ pre{
     color: #fff;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     margin-bottom: 15px;
+    margin-top: 15px;
 }
 
 .meta-list a{
@@ -393,4 +394,16 @@ span.month {
     font-weight: bold;
     font-family: Roboto;
     margin-left: 20px;
+}
+
+.frontpagephoto{
+    margin-bottom: 15px;
+    overflow: hidden;
+    background: #505c70;
+    text-align: center;
+    height: 300px;
+    width: 100%;
+    display: block;
+    vertical-align: middle;
+    border: 1px solid #eee;
 }

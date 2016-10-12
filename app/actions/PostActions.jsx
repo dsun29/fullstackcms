@@ -1,11 +1,12 @@
 import reqwest from 'reqwest'
 import {Open_Dialog, Open_Spinner, Close_Spinner } from './UserActions'
+import config from '../../share/global_config'
 
 export const Save_Post_Action = (post) => {
 	return function (dispatch){
 		dispatch(Open_Spinner());
 		return reqwest({
-            url: 'https://men-sundavy.c9users.io:8080/api/post',
+            url: config.service_root_url + 'api/post',
             method: 'post',
             type: 'json',
             withCredentials: true,
@@ -58,7 +59,7 @@ export const Load_Posts_Action = (condition) => {
 	return function (dispatch){
 	
 		return reqwest({
-            url: 'https://men-sundavy.c9users.io:8080/api/posts',
+            url: config.service_root_url + 'api/posts',
             method: 'get',
             type: 'json',
             contentType: 'application/x-www-form-urlencoded',
@@ -111,7 +112,7 @@ export const Load_Single_Post_Action = (postid) => {
 	return function (dispatch){
 	
 		return reqwest({
-            url: 'https://men-sundavy.c9users.io:8080/api/post/' + postid,
+            url: config.service_root_url + 'api/post/' + postid,
             method: 'get',
             type: 'json',
             contentType: 'application/x-www-form-urlencoded',
