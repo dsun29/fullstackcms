@@ -105,7 +105,7 @@ class UserController extends Controller{
 		//step 1: check if user exists
 		
 		DB.connect().then(function(db){
-			DB.find(db, 'Users', {email: googleResponse.email}, 2, 'lastname')
+			DB.find(db, 'Users', {email: googleResponse.email}, {email: 1, displayname: 1, email: 1}, 2, 'lastname')
 			.then(function(results){
 				
 				if(results == null || results.length != 1){

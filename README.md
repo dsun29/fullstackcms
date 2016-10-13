@@ -18,3 +18,6 @@ FullstackCMS is a content management system (CMS) /blogger system that is made o
 ```sh
  npm install
 ```
+
+### Modify /share/global_config.jsx
+ update the service_root_url in global_config
