@@ -25,7 +25,7 @@ class SinglePostComponent extends React.Component{
     
     componentWillMount() {
         
-        console.log('check state change in componentWillMount - ', this.props.postid);
+        console.log('check state change in componentWillMount - ', this.props.post, this.props.mode);
         
         if(this.props.postid != null && this.props.postid != '' && this.props.postid != 'new'){
             this.props.loadSinglePost(this.props.postid);
@@ -88,11 +88,40 @@ class SinglePostComponent extends React.Component{
         this.props.post.content = e.target.getContent();
     } 
     
+    renderDisplay(){
+        return (<Layout>        
+            <h2 className="title">
+                {this.props.post.title}
+            </h2>
+           <div className="meta">
+                <ul className="meta-list list-inline">
+                    <li className="updated"><i className="fa fa-calendar"></i>{this.props.post.lastmodified}</li>
+                    <li className="post-author updated"><i className="fa fa-user"></i> <a href={this.props.post.author.userid}>{this.props.post.author.name}</a></li>
+                    <li className="post-comments-link updated">
+
+                    <a href="#comment-area"><i className="fa fa-comments"></i> 0 Comments</a>
+                    </li>
+                </ul>
+           </div>
+           
+           <div className="content" dangerouslySetInnerHTML={{__html: this.props.post.content}}>
+        
+           </div>
+                      
+              
+          </Layout>  );
+    }
+
     
-    render(){
+    renderEdit(){
     
         if(this.props.userid == null){
             return (<Layout>{locale[global_config.locale].no_auth}</Layout>)
+        }
+        
+        if(this.props.postid != '' && this.props.postid != null && this.props.postid != 'new' && this.props.post.author != null && this.props.post.author.userid != this.props.userid){
+            
+             return (<Layout>{locale[global_config.locale].no_auth}</Layout>)
         }
         
         if(this.props.postid != '' && this.props.postid != null && this.props.postid != 'new' && (this.props.post.title == null || this.props.post.title == '') ){
@@ -214,7 +243,7 @@ class SinglePostComponent extends React.Component{
                                             'emoticons template paste textcolor colorpicker textpattern imagetools'
                                           ],
                                           toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-                                          toolbar2: 'print preview media | forecolor backcolor emoticons'
+                                          toolbar2: 'print preview media | forecolor backcolor emoticons | code'
                                       }}
                                       onChange={this.handlePostContentChange}
                               />
@@ -234,6 +263,19 @@ class SinglePostComponent extends React.Component{
                 </Form>
               
           </Layout>  );
+    }
+    
+        
+    render(){
+        if((this.props.mode == null || this.props.mode == 'view') && this.props.post.postid != null){
+            return this.renderDisplay();
+        }
+        else if(this.props.mode == 'edit'){
+            return this.renderEdit();
+        }
+        else{
+            return null;
+        }
     }
 }
 

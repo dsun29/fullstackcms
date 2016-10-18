@@ -7,8 +7,6 @@ import Controller from './Controller'
 
 class PostController extends Controller{
 
-
-
 	save(req, res){
 		if(typeof req != undefined){
 			this.req = req;
@@ -35,13 +33,15 @@ class PostController extends Controller{
 				
 				//TODO: DB.insert().then()
 				let post = JSON.parse(req.body.post);
+				let postToBeUpdated = post;
+				console.log('Check post -- ', post);
 				post.author = {userid: req.session.userid, email: req.session.email, name: req.session.displayname};
 				post.lastmodified = new Date();
-				if(post._id == null || post._id == '' || post.id == 'new'){
+				if(post._id == null || post._id == '' || post._id == 'new'){
 					DB.insert(db, 'Posts', post)
 		  			.then(function(results){
 						console.log(results);
-						res.send(results.ops[0]); //TODO://results.xx);
+						res.send(results.ops[0]); 
 				
 					})
 					.catch(function(error) {
@@ -51,10 +51,13 @@ class PostController extends Controller{
 		    		});
 				}
 				else{
+
 					DB.update(db, 'Posts', post)
 		  			.then(function(results){
-						console.log(results);
-						res.send({}); //TODO://results.xx);
+		  				post._id = results._id;
+		  				console.log('postToBeUpdated', post);
+		  				
+						res.send(post); //TODO://results.xx);
 				
 					})
 					.catch(function(error) {

@@ -1,7 +1,6 @@
 import React from 'react';
 import HeaderContainer from '../containers/HeaderContainer'
 import ModalDialogContainer from '../containers/ModalDialogContainer'
-import {ModalContainer, ModalDialog} from 'react-modal-dialog';
 import SpinnerContainer from '../containers/SpinnerContainer'
 
 export default class AppView extends React.Component {

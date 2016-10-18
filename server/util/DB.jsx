@@ -4,63 +4,6 @@ import {ObjectId} from 'mongodb'
 
 class DB{
     
-    static findOne(collectionName, condition, createNewIfNotFound, callback){
-        MongoClient.connect(config.mongo_connection_str, function(err, db) {
-            if(err){
-                callback(error, null);
-                return;
-            }
-            
-            let collection = db.collection(collectionName);
-            if(collection == null || collection == undefined){
-                callback(new Error('Wrong Collection Name - ' + collectionName), null);
-                return;
-            }
-            
-            collection.findOne(condition, function(err, results){
-                if(err){
-                    callback(error, null);
-                    return;
-                }
-                
-                if(createNewIfNotFound && results == null){
-                    
-                }
-                
-                callback(null, results);
-            });
-            
-        });
-        
-    }
-    
-        
-    static insertOne(collectionName, newRecord, callback){
-        MongoClient.connect(config.mongo_connection_str, function(err, db) {
-            if(err){
-                callback(error, null);
-                return;
-            }
-            
-            let collection = db.collection(collectionName);
-            if(collection == null || collection == undefined){
-                callback(new Error('Wrong Collection Name - ' + collectionName), null);
-                return;
-            }
-            
-            collection.insert(newRecord, {}, function(err, results){
-                if(err){
-                    callback(error, null);
-                    return;
-                }
-                
-                callback(null, results);
-            });
-            
-        });
-        
-    }
-    
     static connect() {
         return new Promise((resolve, reject)=>{
         // Use connect method to connect to the Server
@@ -102,12 +45,23 @@ class DB{
             collection.update({_id: id}, newRecord, (err, results) => {
              
                 if(err) reject(err);
-                else resolve(results);
+                else{
+                    results._id = id;
+                    resolve(results);
+                    
+                } 
             });
         });
         
     }
-        
+    
+    static textSearch(db, collectionName, keywords, fields, numRows = 20){
+        let collection = db.collection(collectionName);
+        return new Promise((resolve, reject)=>{
+            resolve(collection.find({"$text": {"$search": keywords}}, {score: {$meta: "toextScore"}}).sort({score:{$meta:"textScore"}}).limit(numRows));
+        });
+    }
+    
 }
 
 export default DB;

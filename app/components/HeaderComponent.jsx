@@ -69,7 +69,7 @@ const HeaderComponent = ({userid, displayname, logout}) =>
                                         </Link>
                                     </li>
                                     <li role="presentation">
-                                        <Link role="menuitem" to="/post/new">
+                                        <Link role="menuitem" to="/post/new?mode=edit">
                                             <i className="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;New Post
                                         </Link>
                                     </li>

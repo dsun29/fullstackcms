@@ -10,14 +10,56 @@ export default class IndexComponent extends React.Component {
     constructor(props){
         super(props);
         this.props = props;
+
+        this.onSearch = this.onSearch.bind(this);
     }
     
     componentDidMount() {
-        this.props.loadPosts({front: 'y'});
-        console.log(this.props.queryParams);
+        let queryParams = this.props.queryParams;
+        let condition = {front: 'y'};
+        if(queryParams.t != null && queryParams.t != ''){
+            condition.keywords = queryParams.t;
+        }
+        if(queryParams.k != null && queryParams.k != ''){
+            condition.keywords = queryParams.k;
+        }
+        
+        this.props.loadPosts(condition);
+        console.log('params', this.props.queryParams);
         this.props.loadSavedStates(this.props.queryParams);
     }
+    
+    componentDidUpdate (prevProps) {
+        if(this.props.queryParams.front !== prevProps.queryParams.front 
+            || this.props.queryParams.t !== prevProps.queryParams.t 
+            || this.props.queryParams.k !== prevProps.queryParams.k){
+            
+            console.log('params in didUpdate', this.props.queryParams);
+            let queryParams = this.props.queryParams;
+            let condition = {front: 'y'};
+            if(queryParams.t != null && queryParams.t != ''){
+                condition.keywords = queryParams.t;
+            }
+            if(queryParams.k != null && queryParams.k != ''){
+                condition.keywords = queryParams.k;
+            }
+            
+            this.props.loadPosts(condition);
+        }
+    }
   
+    
+    onSearch(){
+        let keywords = this.refs.keywordsInput.value;
+    	if(keywords === null || keywords === undefined){
+			return false;
+		}
+		keywords = keywords.trim();
+		if(keywords.length < 2){
+		    return false;
+		}
+        this.props.search(keywords);
+    }
   
     render() {
         return (
@@ -65,8 +107,12 @@ export default class IndexComponent extends React.Component {
                     
                         <FormGroup>
                             <InputGroup>
-                                <FormControl type="text" />
-                                <InputGroup.Addon>
+                                <input className="form-control"
+                                    type="text" 
+                                    defaultValue={this.props.queryParams.k}
+                                    ref="keywordsInput"
+                                />
+                                <InputGroup.Addon onClick={()=>this.onSearch()}>
                                     <Glyphicon glyph="search" />
                                 </InputGroup.Addon>
                             </InputGroup>

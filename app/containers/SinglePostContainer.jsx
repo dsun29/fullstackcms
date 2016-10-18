@@ -8,14 +8,14 @@ import {Open_Dialog } from '../actions/UserActions'
 
 
 const mapStateToProps = (state, props) =>{
-	console.log('check state change - ', props.params.postid);
-	
+
 	return {
 		userid: state.UserReducer.userid ? state.UserReducer.userid : null,
 		displayname: state.UserReducer.displayname ? state.UserReducer.displayname : 'Guest',
 		post: state.PostReducer.post ? state.PostReducer.post : {},
 		postid: props.params.postid,
-		loading: state.PostReducer.loading
+		loading: state.PostReducer.loading,
+		mode: props.location.query.mode
 		
 	}
 }

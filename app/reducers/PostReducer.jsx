@@ -1,8 +1,9 @@
 function PostReducer(state = {}, action)  {
 	switch (action.type){
+		
 		case 'SAVE_POST_SUCCEED':
 			
-			return Object.assign({}, state, action.post);
+			return Object.assign({}, state, action.post, {postid: action.post_id});
 												
 		
 		case 'LOAD_POSTS_SUCCEED':

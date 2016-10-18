@@ -6,7 +6,7 @@ const ModalDialogComponent = ({showDialog, dialogTitle, dialogBody, onDialogClos
    (	
         <Modal
             show={showDialog}
-            onHide={onClose}
+            onHide={onDialogClose ? onDialogClose : onClose}
             container={this}
             aria-labelledby="contained-modal-title"
         >
@@ -17,7 +17,7 @@ const ModalDialogComponent = ({showDialog, dialogTitle, dialogBody, onDialogClos
                 {dialogBody}
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={onClose}>Close</Button>
+                <Button onClick={onDialogClose ? onDialogClose : onClose}>Close</Button>
             </Modal.Footer>
         </Modal>
     )

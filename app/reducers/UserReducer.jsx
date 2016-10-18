@@ -17,18 +17,20 @@ function UserReducer(state = {}, action)  {
 			return Object.assign({}, state, {
 												showDialog: false,
 												dialogTitle: '',
-												dialogBody: ''});
+												dialogBody: '',
+												onDialogClose: null});
 				
 			
 		case 'OPEN_DIALOG':
 			{ 
 				
-				const new_state = Object.assign({}, state, {
+				return Object.assign({}, state, {
 															showDialog: true,
 															dialogTitle: action.dialogTitle,
-															dialogBody: action.dialogBody});
+															dialogBody: action.dialogBody,
+															onDialogClose: action.onDialogClose});
 				
-				return  new_state;
+
 			
 			}
 			

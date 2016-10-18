@@ -1,7 +1,7 @@
 import React from 'react'
 import { Provider, connect } from 'react-redux'
 import EditorPostListComponent from '../components/EditorPostListComponent'
-import {Load_Posts_Action} from '../actions/PostActions'
+import {Load_Posts_Action, Remove_Post_Action} from '../actions/PostActions'
 import { browserHistory } from 'react-router'
 
 
@@ -19,9 +19,8 @@ const mapDispatchToProps = (dispatch) => {
 		loadPostsByAuthor: (userid) => {
 			dispatch(Load_Posts_Action({author:userid}));
 		},
-		onPostClick:(postid) => {
-			console.log('clicked', postid);
-			browserHistory.push('/post/' + postid);
+		removePost: (postid) => {
+			dispatch(Remove_Post_Action(postid));
 		}
 	}
 }

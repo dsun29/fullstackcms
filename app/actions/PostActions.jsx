@@ -1,8 +1,12 @@
 import reqwest from 'reqwest'
-import {Open_Dialog, Open_Spinner, Close_Spinner } from './UserActions'
+import {Open_Dialog, Close_Dialog, Open_Spinner, Close_Spinner } from './UserActions'
 import config from '../../share/global_config'
+import {browserHistory} from "react-router";
 
 export const Save_Post_Action = (post) => {
+	
+	console.log(post);
+	
 	return function (dispatch){
 		dispatch(Open_Spinner());
 		return reqwest({
@@ -12,17 +16,18 @@ export const Save_Post_Action = (post) => {
             withCredentials: true,
             data: {post: JSON.stringify(post)},
             error: function(err){
-                 console.log('Eoooo = ', err);
+                 console.log('error in save_post_action = ', err);
                  dispatch(Close_Spinner())
                  dispatch(Save_Fail_Action(err));
-                 dispatch(Open_Dialog('Failed to save post', err.stack, function(){}));
+                 dispatch(Open_Dialog('Failed to save post', err.stack, null));
             },
             
             success: function (response) {
-              	console.log(response);
+            	console.log('successfully saved post', response);
+    
               	dispatch(Close_Spinner());
               	dispatch(Save_Succeed_Action(response));
-              	dispatch(Open_Dialog('Successfully Saved', 'The new post is successfully saved.', function(){}));
+              	dispatch(Open_Dialog('Successfully Saved', 'The new post is successfully saved.', function(){browserHistory.push('/post/' + response._id + '?mode=edit'); dispatch(Close_Dialog());}));
             }
 
         })
@@ -66,7 +71,7 @@ export const Load_Posts_Action = (condition) => {
             withCredentials: true,
             data: condition,
             error: function(err){
-                 dispatch(Open_Dialog('Failed to load posts', err.responseText, function(){}));
+                 dispatch(Open_Dialog('Failed to load posts', err.responseText, null));
                  dispatch(Load_Posts_Fail_Action(err));
             },
             success: function (response) {
@@ -118,7 +123,7 @@ export const Load_Single_Post_Action = (postid) => {
             contentType: 'application/x-www-form-urlencoded',
             withCredentials: true,
             error: function(err){
-                 dispatch(Open_Dialog('Failed to load the post', err.responseText, function(){}));
+                 dispatch(Open_Dialog('Failed to load the post', err.responseText, null));
                  dispatch(Load_Single_Post_Fail_Action(err));
             },
             success: function (response) {
@@ -150,3 +155,35 @@ export const Init_Post_Action = () => {
 		type: 'INIT_POST'
 	}
 }
+
+/********************************************************************************/
+export const Remove_Post_Action = (postid) => {
+	
+	
+	return function (dispatch){
+		dispatch(Open_Spinner());
+		return reqwest({
+            url: config.service_root_url + 'api/post/' + postid,
+            method: 'delete',
+            type: 'json',
+            withCredentials: true,
+            data: {post: JSON.stringify(post)},
+            error: function(err){
+                 console.log('error in save_post_action = ', err);
+                 dispatch(Close_Spinner())
+                 dispatch(Save_Fail_Action(err));
+                 dispatch(Open_Dialog('Failed to save post', err.stack, null));
+            },
+            
+            success: function (response) {
+            	console.log('successfully saved post', response);
+    
+              	dispatch(Close_Spinner());
+              	//dispatch(Save_Succeed_Action(response));
+              	//dispatch(Open_Dialog('Successfully Saved', 'The new post is successfully saved.', function(){browserHistory.push('/post/' + response._id + '?mode=edit'); dispatch(Close_Dialog());}));
+            }
+
+        })
+	}
+}
+

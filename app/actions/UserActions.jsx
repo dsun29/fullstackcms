@@ -48,7 +48,6 @@ export function Twitter_Login_Start_Action(){
                  dispatch(Login_Fail_Action(err));
             },
             success: function (response) {
-              	console.log('goood = ', response);
               	//dispatch(Login_Succeed_Action(response.userid, response.displayname));
               	window.location = response;
             }
@@ -87,7 +86,8 @@ export const Open_Dialog = (title, body, onClose) => {
 	return {
 		type: 'OPEN_DIALOG',
 		dialogTitle: title,
-		dialogBody: body
+		dialogBody: body,
+		onDialogClose: onClose
 	}
 	
 
