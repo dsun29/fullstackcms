@@ -5,7 +5,6 @@ const HappyPack = require('happypack');
 
 
 module.exports = {
-    devtool: 'inline-source-map',
     entry: [
         './app/components'
     ],
