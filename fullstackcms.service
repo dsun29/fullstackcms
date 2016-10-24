@@ -1,0 +1,12 @@
+[Unit]
+Description=Dayong's Blog using FullstackCMS
+After=network.target
+
+[Service]
+ExecStart=/var/www/fullstackrebel/index.https.js
+Restart=always
+Environment=NODE_ENV=production
+
+
+[Install]
+WantedBy=default.target

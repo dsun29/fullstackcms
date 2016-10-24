@@ -8,6 +8,10 @@ FullstackCMS is a content management system (CMS) /blogger system that is made o
   - webpack 1.x
   - A MongoDB instance
   
+### Create Text Index in MongoDB
+```javascript
+db.Posts.createIndex({title: "text", tags: "text", content: "text"});
+```
 
 ### Get FullstackCMS source code
 ```sh
