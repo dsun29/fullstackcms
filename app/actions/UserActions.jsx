@@ -90,7 +90,6 @@ export const Open_Dialog = (title, body, onClose) => {
 		onDialogClose: onClose
 	}
 	
-
 }
 
 export const Close_Dialog = () => {

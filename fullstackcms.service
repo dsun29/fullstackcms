@@ -3,10 +3,10 @@ Description=Dayong's Blog using FullstackCMS
 After=network.target
 
 [Service]
-ExecStart=/var/www/fullstackrebel/index.https.js
+ExecStart=/var/www/fullstackrebel/index.https.js 3> fullstackcms.log
 Restart=always
 Environment=NODE_ENV=production
-
+Environment=DEBUG_FD=3
 
 [Install]
 WantedBy=default.target

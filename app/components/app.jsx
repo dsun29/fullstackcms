@@ -11,7 +11,6 @@ import PostDisplayContainer from '../containers/PostDisplayContainer'
 import EditorPostListContainer from '../containers/EditorPostListContainer'
 import 'css/globals.scss';
 
-
 const store = makeStore({UserReducer: {showDialog: false, dialogTitle:  '', dialogBody: '', showSpinner: false}});
 
 var shell = document.createElement('main');

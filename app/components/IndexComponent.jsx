@@ -69,7 +69,7 @@ export default class IndexComponent extends React.Component {
                     
                         {this.props.posts.map(post =>
                         
-                            <div className="row" key={post._id}>
+                            <div className="row post-row" key={post._id}>
                                 <div className="meta col-md-2 col-sm-3 col-xs-12 text-right">
                                     <ul className="meta-list list-unstyled">
                                         <li className="post-time post_date date updated">
