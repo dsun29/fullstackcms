@@ -19,7 +19,11 @@ router.get('/twitteraccesstoken', (req, res) => {
 });
 
 router.post('/api/state', (req, res) => {
-	userController.getStoredState(req, res);
+	userController.getInitState(req, res);
+});
+
+router.post('/api/config', (req, res) => {
+	userController.updateConfig(req, res);
 });
 
 router.get('/', (req, res) => {
@@ -43,5 +47,8 @@ router.get('/api/post/:postid', (req, res) => {
 
 export default function routes (app) {
 	app.use('/', router);
+	//app.all('*', function(req, res) {
+	//	res.redirect("/");
+	//});
 }
 

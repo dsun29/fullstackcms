@@ -1,0 +1,38 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.makeStore = makeStore;
+
+var _redux = require('redux');
+
+var _PostReducer = require('./reducers/PostReducer.jsx');
+
+var _PostReducer2 = _interopRequireDefault(_PostReducer);
+
+var _UserReducer = require('./reducers/UserReducer.jsx');
+
+var _UserReducer2 = _interopRequireDefault(_UserReducer);
+
+var _reduxThunk = require('redux-thunk');
+
+var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function makeStore(state) {
+    var reducers = (0, _redux.combineReducers)({ PostReducer: _PostReducer2.default, UserReducer: _UserReducer2.default });
+    return (0, _redux.createStore)(reducers, state, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+}
+;
+
+var _temp = function () {
+    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+        return;
+    }
+
+    __REACT_HOT_LOADER__.register(makeStore, 'makeStore', '/home/ubuntu/workspace/app/helpers.jsx');
+}();
+
+;

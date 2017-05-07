@@ -1,0 +1,188 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactBootstrap = require('react-bootstrap');
+
+var _reactRouter = require('react-router');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var HeaderComponent = function HeaderComponent(_ref) {
+    var userid = _ref.userid;
+    var displayname = _ref.displayname;
+    var logout = _ref.logout;
+    return _react2.default.createElement(
+        _reactBootstrap.Navbar,
+        { inverse: true },
+        _react2.default.createElement(
+            _reactBootstrap.Navbar.Header,
+            null,
+            _react2.default.createElement(
+                'h1',
+                { className: 'logo' },
+                _react2.default.createElement(
+                    'a',
+                    { href: '/' },
+                    _react2.default.createElement(
+                        'span',
+                        { className: 'highlight' },
+                        'Fullstack'
+                    ),
+                    'Rebel'
+                )
+            ),
+            _react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)
+        ),
+        _react2.default.createElement(
+            _reactBootstrap.Navbar.Collapse,
+            null,
+            _react2.default.createElement(
+                _reactBootstrap.Nav,
+                { pullRight: true },
+                _react2.default.createElement(
+                    'li',
+                    { role: 'presentation' },
+                    _react2.default.createElement(
+                        _reactRouter.Link,
+                        { role: 'menuitem', to: '/?t=College%20Football' },
+                        'College Football'
+                    )
+                ),
+                _react2.default.createElement(
+                    _reactBootstrap.NavDropdown,
+                    { title: 'Programming', id: 'basic-nav-dropdown' },
+                    _react2.default.createElement(
+                        'li',
+                        { role: 'presentation' },
+                        _react2.default.createElement(
+                            _reactRouter.Link,
+                            { role: 'menuitem', to: '/?t=Python' },
+                            _react2.default.createElement('i', { className: 'fa fa-flask', 'aria-hidden': 'true' }),
+                            '\xA0\xA0\xA0\xA0Python'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        { role: 'presentation' },
+                        _react2.default.createElement(
+                            _reactRouter.Link,
+                            { role: 'menuitem', to: '/?t=Java' },
+                            _react2.default.createElement('i', { className: 'fa fa-list-alt', 'aria-hidden': 'true' }),
+                            '\xA0\xA0\xA0\xA0JAVA'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        { role: 'presentation' },
+                        _react2.default.createElement(
+                            _reactRouter.Link,
+                            { role: 'menuitem', to: '/?t=Web' },
+                            _react2.default.createElement('i', { className: 'fa fa-internet-explorer', 'aria-hidden': 'true' }),
+                            '\xA0\xA0\xA0\xA0WEB PROGRAMMING'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        { role: 'presentation' },
+                        _react2.default.createElement(
+                            _reactRouter.Link,
+                            { role: 'menuitem', to: '/?t=testing' },
+                            _react2.default.createElement('i', { className: 'fa fa-check-square-o', 'aria-hidden': 'true' }),
+                            '\xA0\xA0\xA0\xA0TEST AUTOMATION'
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    'li',
+                    { role: 'presentation' },
+                    _react2.default.createElement(
+                        _reactRouter.Link,
+                        { role: 'menuitem', to: '/?t=AWS' },
+                        'AWS & CLOUD'
+                    )
+                ),
+                userid ? _react2.default.createElement(
+                    _reactBootstrap.NavDropdown,
+                    {
+                        title: _react2.default.createElement(
+                            'span',
+                            null,
+                            ' ',
+                            _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'user' }),
+                            '  ',
+                            displayname,
+                            ' '
+                        ),
+                        id: 'basic-nav-dropdown'
+                    },
+                    _react2.default.createElement(
+                        'li',
+                        { role: 'presentation' },
+                        _react2.default.createElement(
+                            _reactRouter.Link,
+                            { role: 'menuitem', to: '/me' },
+                            _react2.default.createElement('i', { className: 'fa fa-list-alt', 'aria-hidden': 'true' }),
+                            '\xA0\xA0\xA0\xA0My Posts'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        { role: 'presentation' },
+                        _react2.default.createElement(
+                            _reactRouter.Link,
+                            { role: 'menuitem', to: '/post/new?mode=edit' },
+                            _react2.default.createElement('i', { className: 'fa fa-pencil-square-o', 'aria-hidden': 'true' }),
+                            '\xA0\xA0\xA0\xA0New Post'
+                        )
+                    ),
+                    _react2.default.createElement(_reactBootstrap.MenuItem, { divider: true }),
+                    _react2.default.createElement(
+                        'li',
+                        { role: 'presentation' },
+                        ' ',
+                        _react2.default.createElement(
+                            'a',
+                            { onClick: function onClick() {
+                                    return logout();
+                                } },
+                            _react2.default.createElement('i', { className: 'fa fa-sign-out fa-fw', 'aria-hidden': 'true' }),
+                            '\xA0\xA0\xA0\xA0Log Out'
+                        )
+                    )
+                ) : _react2.default.createElement(
+                    'li',
+                    { role: 'presentation' },
+                    _react2.default.createElement(
+                        _reactRouter.Link,
+                        { to: '/login' },
+                        _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'user' }),
+                        ' Log In'
+                    )
+                )
+            )
+        )
+    );
+};
+
+var _default = HeaderComponent;
+exports.default = _default;
+;
+
+var _temp = function () {
+    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+        return;
+    }
+
+    __REACT_HOT_LOADER__.register(HeaderComponent, 'HeaderComponent', '/home/ubuntu/workspace/app/components/HeaderComponent.jsx');
+
+    __REACT_HOT_LOADER__.register(_default, 'default', '/home/ubuntu/workspace/app/components/HeaderComponent.jsx');
+}();
+
+;

@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/reducers/index.jsx"],"names":["default"],"mappings":";;;;;;;;;;;gDAASA,O","file":"index.jsx","sourceRoot":"/home/ubuntu/workspace","sourcesContent":["export { default as UserReducer } from './UserReducer';\n"]}

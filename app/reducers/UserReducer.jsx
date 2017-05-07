@@ -15,25 +15,25 @@ function UserReducer(state = {}, action)  {
 		case 'CLOSE_DIALOG':
 
 			return Object.assign({}, state, {
-												showDialog: false,
-												dialogTitle: '',
-												dialogBody: '',
-												onDialogClose: null});
+				showDialog: false,
+				dialogTitle: '',
+				dialogBody: '',
+				onDialogClose: null
+				
+			});
 				
 			
 		case 'OPEN_DIALOG':
-			{ 
 				
-				return Object.assign({}, state, {
-															showDialog: true,
-															dialogTitle: action.dialogTitle,
-															dialogBody: action.dialogBody,
-															onDialogClose: action.onDialogClose});
+			return Object.assign({}, state, {
+				showDialog: true,
+				dialogTitle: action.dialogTitle,
+				dialogBody: action.dialogBody,
+				onDialogClose: action.onDialogClose
+				
+			});
 				
 
-			
-			}
-			
 		case 'OPEN_SPINNER':
 
 			return Object.assign({}, state, {showSpinner: true});

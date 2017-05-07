@@ -1,0 +1,90 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = productReducer;
+
+var _immutable = require('immutable');
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var defaultState = (0, _immutable.Map)({
+    items: (0, _immutable.List)(),
+    cart: (0, _immutable.List)()
+});
+
+function productReducer() {
+    var state = arguments.length <= 0 || arguments[0] === undefined ? defaultState : arguments[0];
+    var action = arguments[1];
+
+    switch (action.type) {
+        case 'SET_ITEMS':
+            return state.set('items', (0, _immutable.fromJS)(action.items));
+        case 'SET_CART':
+            return state.set('cart', (0, _immutable.fromJS)(action.cart));
+        case 'CART_ADD':
+            return addToCart(state, action);
+        case 'CART_REMOVE':
+            return removeFromCart(state, action);
+        default:
+            return state;
+    }
+}
+
+function addToCart(state, action) {
+    var nextCart = state.get('cart').push(action.id);
+
+    _jquery2.default.ajax({
+        type: 'POST',
+        url: '/products/cart/update',
+        data: JSON.stringify({ cart: nextCart }),
+        contentType: 'application/json',
+        success: function success(response) {
+            console.log(response);
+        }
+    });
+
+    return state.set('cart', nextCart);
+}
+
+function removeFromCart(state, action) {
+    var cart = state.get('cart');
+    var index = cart.findIndex(function (id) {
+        return id === action.id;
+    });
+    var nextCart = cart.delete(index);
+
+    _jquery2.default.ajax({
+        type: 'POST',
+        url: '/products/cart/update',
+        data: JSON.stringify({ cart: nextCart }),
+        contentType: 'application/json',
+        success: function success(response) {
+            console.log(response);
+        }
+    });
+
+    return state.set('cart', nextCart);
+}
+;
+
+var _temp = function () {
+    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+        return;
+    }
+
+    __REACT_HOT_LOADER__.register(productReducer, 'productReducer', '/home/ubuntu/workspace/app/reducers/ProductsReducer.jsx');
+
+    __REACT_HOT_LOADER__.register(addToCart, 'addToCart', '/home/ubuntu/workspace/app/reducers/ProductsReducer.jsx');
+
+    __REACT_HOT_LOADER__.register(removeFromCart, 'removeFromCart', '/home/ubuntu/workspace/app/reducers/ProductsReducer.jsx');
+
+    __REACT_HOT_LOADER__.register(defaultState, 'defaultState', '/home/ubuntu/workspace/app/reducers/ProductsReducer.jsx');
+}();
+
+;

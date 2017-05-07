@@ -1,0 +1,77 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _HeaderContainer = require('../containers/HeaderContainer');
+
+var _HeaderContainer2 = _interopRequireDefault(_HeaderContainer);
+
+var _ModalDialogContainer = require('../containers/ModalDialogContainer');
+
+var _ModalDialogContainer2 = _interopRequireDefault(_ModalDialogContainer);
+
+var _SpinnerContainer = require('../containers/SpinnerContainer');
+
+var _SpinnerContainer2 = _interopRequireDefault(_SpinnerContainer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AppView = function (_React$Component) {
+    _inherits(AppView, _React$Component);
+
+    function AppView() {
+        _classCallCheck(this, AppView);
+
+        return _possibleConstructorReturn(this, (AppView.__proto__ || Object.getPrototypeOf(AppView)).apply(this, arguments));
+    }
+
+    _createClass(AppView, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(_HeaderContainer2.default, null),
+                _react2.default.createElement(_SpinnerContainer2.default, null),
+                _react2.default.createElement(_ModalDialogContainer2.default, null),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'container' },
+                    this.props.children
+                )
+            );
+        }
+    }]);
+
+    return AppView;
+}(_react2.default.Component);
+
+var _default = AppView;
+exports.default = _default;
+;
+
+var _temp = function () {
+    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+        return;
+    }
+
+    __REACT_HOT_LOADER__.register(AppView, 'AppView', '/home/ubuntu/workspace/app/components/Layout.jsx');
+
+    __REACT_HOT_LOADER__.register(_default, 'default', '/home/ubuntu/workspace/app/components/Layout.jsx');
+}();
+
+;

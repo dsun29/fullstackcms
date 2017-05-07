@@ -4,10 +4,13 @@
     "react"
   ],
   "parser": "babel-eslint",
+   "extends": "eslint:recommended",
   "rules": {
-    "strict": 0,
-    "indent": ["error", 4],
+    "strict": 1,
+    "indent": ["error", "tab"],
+    "no-tabs": 0,
     "comma-dangle": ["error", "never"],
-    "object-curly-spacing": ["error", "never"]
+    "object-curly-spacing": ["error", "never"],
+    "no-console": ["error"]
   }
 }

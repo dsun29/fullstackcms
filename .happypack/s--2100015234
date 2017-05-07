@@ -1,0 +1,83 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = require('react-redux');
+
+var _IndexComponent = require('../components/IndexComponent');
+
+var _IndexComponent2 = _interopRequireDefault(_IndexComponent);
+
+var _PostActions = require('../actions/PostActions');
+
+var _UserActions = require('../actions/UserActions');
+
+var _reactRouter = require('react-router');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state, props) {
+
+	return {
+		userid: state.UserReducer.userid ? state.UserReducer.userid : null,
+		displayname: state.UserReducer.displayname ? state.UserReducer.displayname : 'Guest',
+		posts: state.PostReducer.posts ? state.PostReducer.posts : [],
+		installing: state.UserReducer.installing,
+		queryParams: props.location.query,
+		tag: props.location.query.t,
+		keywords: props.location.query.k //we must keep it, just for fun
+	};
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	return {
+		loadPosts: function loadPosts(condition) {
+			dispatch((0, _PostActions.Load_Posts_Action)(condition));
+		},
+		onPostClick: function onPostClick(postid) {
+			dispatch((0, _PostActions.Load_Posts_Action)({ author: userid }));
+		},
+		loadSavedStates: function loadSavedStates(params) {
+			dispatch((0, _UserActions.State_Initialization_Action)(params));
+		},
+		search: function search(keywords) {
+			keywords = keywords.trim();
+			if (keywords === null || keywords === undefined || keywords.length < 2) {
+				return null;
+			}
+			_reactRouter.browserHistory.push('/?k=' + keywords);
+		},
+		startInstallation: function startInstallation() {
+			_reactRouter.browserHistory.push('/install');
+		}
+
+	};
+};
+
+var IndexContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_IndexComponent2.default);
+
+var _default = IndexContainer;
+exports.default = _default;
+;
+
+var _temp = function () {
+	if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+		return;
+	}
+
+	__REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/home/ubuntu/workspace/app/containers/IndexContainer.jsx');
+
+	__REACT_HOT_LOADER__.register(mapDispatchToProps, 'mapDispatchToProps', '/home/ubuntu/workspace/app/containers/IndexContainer.jsx');
+
+	__REACT_HOT_LOADER__.register(IndexContainer, 'IndexContainer', '/home/ubuntu/workspace/app/containers/IndexContainer.jsx');
+
+	__REACT_HOT_LOADER__.register(_default, 'default', '/home/ubuntu/workspace/app/containers/IndexContainer.jsx');
+}();
+
+;

@@ -1,0 +1,272 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactBootstrap = require('react-bootstrap');
+
+var _Layout = require('./Layout');
+
+var _Layout2 = _interopRequireDefault(_Layout);
+
+var _reactRouter = require('react-router');
+
+var _locale = require('../../share/util/locale');
+
+var _locale2 = _interopRequireDefault(_locale);
+
+var _global_config = require('../../share/global_config');
+
+var _global_config2 = _interopRequireDefault(_global_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var InstallationComponent = function (_React$Component) {
+    _inherits(InstallationComponent, _React$Component);
+
+    function InstallationComponent(props) {
+        _classCallCheck(this, InstallationComponent);
+
+        var _this = _possibleConstructorReturn(this, (InstallationComponent.__proto__ || Object.getPrototypeOf(InstallationComponent)).call(this, props));
+
+        _this.props = props;
+
+        _this.updateDBUrl = _this.updateDBUrl.bind(_this);
+        return _this;
+    }
+
+    _createClass(InstallationComponent, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {}
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps) {}
+    }, {
+        key: 'updateDBUrl',
+        value: function updateDBUrl() {
+
+            var dbStr = this.dbInput.value;
+            console.log(dbStr);
+            if (dbStr === null || typeof dbStr === 'undefined' || dbStr.length < 3) {
+                return;
+            }
+
+            this.props.updateConfigAction({ db: dbStr });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'container' },
+                _react2.default.createElement(
+                    _reactBootstrap.PageHeader,
+                    null,
+                    'Let\'s Get Started'
+                ),
+                _react2.default.createElement(
+                    _reactBootstrap.Form,
+                    { horizontal: true },
+                    _react2.default.createElement(
+                        _reactBootstrap.FormGroup,
+                        { controlId: 'formHorizontalEmail', className: 'required' },
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+                            'MongoDB Connection URI'
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { sm: 7 },
+                            _react2.default.createElement('input', {
+                                className: 'form-control',
+                                type: 'text',
+                                ref: function ref(input) {
+                                    _this2.dbInput = input;
+                                },
+                                defaultValue: this.props.db,
+                                placeholder: 'mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]'
+                            })
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { sm: 2 },
+                            _react2.default.createElement(
+                                _reactBootstrap.Button,
+                                { onClick: function onClick() {
+                                        return _this2.updateDBUrl();
+                                    } },
+                                'Test Connectivity'
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.FormGroup,
+                        { controlId: 'formHorizontalEmail', className: 'required' },
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+                            'Site Name'
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { sm: 9 },
+                            _react2.default.createElement(_reactBootstrap.FormControl, {
+                                type: 'text',
+                                placeholder: 'Your site\'s name'
+                            })
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.FormGroup,
+                        { controlId: 'formHorizontalEmail', className: 'required' },
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+                            'Admin\'s Email'
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { sm: 9 },
+                            _react2.default.createElement(_reactBootstrap.FormControl, {
+                                type: 'text',
+                                placeholder: 'abc@xyz.com'
+                            })
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.FormGroup,
+                        { controlId: 'formHorizontalEmail', className: 'required' },
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+                            'Admin\'s Password'
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { sm: 9 },
+                            _react2.default.createElement(_reactBootstrap.FormControl, {
+                                type: 'text',
+                                placeholder: 'at least 8 characters'
+                            })
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.FormGroup,
+                        { controlId: 'formHorizontalEmail', className: 'required' },
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+                            'Confirm Password'
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { sm: 9 },
+                            _react2.default.createElement(_reactBootstrap.FormControl, {
+                                type: 'text',
+                                placeholder: ''
+                            })
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.FormGroup,
+                        { controlId: 'formHorizontalEmail' },
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+                            'Google Client ID'
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { sm: 9 },
+                            _react2.default.createElement(_reactBootstrap.FormControl, {
+                                type: 'text',
+                                placeholder: '88888888888-abcdefghijklmn.apps.googleusercontent.com'
+                            })
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.FormGroup,
+                        { controlId: 'formHorizontalEmail' },
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+                            'Twitter Consumer Key'
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { sm: 9 },
+                            _react2.default.createElement(_reactBootstrap.FormControl, {
+                                type: 'text',
+                                placeholder: ''
+                            })
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.FormGroup,
+                        { controlId: 'formHorizontalEmail' },
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+                            'Twitter Consumer Secret'
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { sm: 9 },
+                            _react2.default.createElement(_reactBootstrap.FormControl, {
+                                type: 'text',
+                                placeholder: ''
+                            })
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.FormGroup,
+                        null,
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { smOffset: 3, sm: 10 },
+                            _react2.default.createElement(
+                                _reactBootstrap.Button,
+                                null,
+                                'Save'
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return InstallationComponent;
+}(_react2.default.Component);
+
+var _default = InstallationComponent;
+exports.default = _default;
+;
+
+var _temp = function () {
+    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+        return;
+    }
+
+    __REACT_HOT_LOADER__.register(InstallationComponent, 'InstallationComponent', '/home/ubuntu/workspace/app/components/InstallationComponent.jsx');
+
+    __REACT_HOT_LOADER__.register(_default, 'default', '/home/ubuntu/workspace/app/components/InstallationComponent.jsx');
+}();
+
+;

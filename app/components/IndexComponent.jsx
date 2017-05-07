@@ -12,27 +12,34 @@ export default class IndexComponent extends React.Component {
         this.props = props;
 
         this.onSearch = this.onSearch.bind(this);
+        
+        console.log('IndexComponent constructor');
     }
     
-    componentDidMount() {
-        let queryParams = this.props.queryParams;
-        let condition = {front: 'y'};
-        if(queryParams.t != null && queryParams.t != ''){
-            condition.keywords = queryParams.t;
-        }
-        if(queryParams.k != null && queryParams.k != ''){
-            condition.keywords = queryParams.k;
-        }
+    componentWillMount() {
         
-        this.props.loadPosts(condition);
-        console.log('params', this.props.queryParams);
+        console.log('IndexComponent componentWillMount');
+        
         this.props.loadSavedStates(this.props.queryParams);
+        
     }
+    
+
     
     componentDidUpdate (prevProps) {
-        if(this.props.queryParams.front !== prevProps.queryParams.front 
+        
+        console.log('IndexComponent componentDidUpdate');
+        
+        if (this.props.installing === true && prevProps.installing !== true) {
+            this.props.startInstallation();
+            
+            return;
+        }
+        
+        
+        if ((this.props.queryParams.front !== prevProps.queryParams.front 
             || this.props.queryParams.t !== prevProps.queryParams.t 
-            || this.props.queryParams.k !== prevProps.queryParams.k){
+            || this.props.queryParams.k !== prevProps.queryParams.k) && this.props.installing !== true) {
             
             console.log('params in didUpdate', this.props.queryParams);
             let queryParams = this.props.queryParams;
@@ -46,6 +53,8 @@ export default class IndexComponent extends React.Component {
             
             this.props.loadPosts(condition);
         }
+        
+
     }
   
     

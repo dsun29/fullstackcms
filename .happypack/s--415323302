@@ -1,0 +1,26 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _UserReducer = require('./UserReducer');
+
+Object.defineProperty(exports, 'UserReducer', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_UserReducer).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+}();
+
+;

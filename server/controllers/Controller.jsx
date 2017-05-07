@@ -1,7 +1,7 @@
 import { MongoClient } from 'mongodb';
 const debug = require('debug')('server');
 
-import config from '../server.dev.config';
+import config from '../fullstackcms.config';
 import locale from '../../share/util/locale';
 import DB from '../util/DB';
 

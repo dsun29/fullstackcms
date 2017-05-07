@@ -1,0 +1,63 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = require('react-redux');
+
+var _EditorPostListComponent = require('../components/EditorPostListComponent');
+
+var _EditorPostListComponent2 = _interopRequireDefault(_EditorPostListComponent);
+
+var _PostActions = require('../actions/PostActions');
+
+var _reactRouter = require('react-router');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state) {
+
+	return {
+		userid: state.UserReducer.userid ? state.UserReducer.userid : null,
+		displayname: state.UserReducer.displayname ? state.UserReducer.displayname : 'Guest',
+		posts: state.PostReducer.posts ? state.PostReducer.posts : []
+	};
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	return {
+		loadPostsByAuthor: function loadPostsByAuthor(userid) {
+			dispatch((0, _PostActions.Load_Posts_Action)({ author: userid }));
+		},
+		removePost: function removePost(postid) {
+			dispatch((0, _PostActions.Remove_Post_Action)(postid));
+		}
+	};
+};
+
+var EditorPostListContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_EditorPostListComponent2.default);
+
+var _default = EditorPostListContainer;
+exports.default = _default;
+;
+
+var _temp = function () {
+	if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+		return;
+	}
+
+	__REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/home/ubuntu/workspace/app/containers/EditorPostListContainer.jsx');
+
+	__REACT_HOT_LOADER__.register(mapDispatchToProps, 'mapDispatchToProps', '/home/ubuntu/workspace/app/containers/EditorPostListContainer.jsx');
+
+	__REACT_HOT_LOADER__.register(EditorPostListContainer, 'EditorPostListContainer', '/home/ubuntu/workspace/app/containers/EditorPostListContainer.jsx');
+
+	__REACT_HOT_LOADER__.register(_default, 'default', '/home/ubuntu/workspace/app/containers/EditorPostListContainer.jsx');
+}();
+
+;

@@ -43,10 +43,10 @@ class SinglePostComponent extends React.Component{
     componentWillReceiveProps(nextProps) {
         
         if(nextProps.postid != this.props.postid){
-            if(nextProps.postid != null && nextProps.postid != '' && nextProps.postid != 'new'){
+            if (nextProps.postid != null && nextProps.postid != '' && nextProps.postid != 'new') {
                 this.props.loadSinglePost(nextProps.postid);
             }
-            else if(nextProps.postid == 'new'){
+            else if (nextProps.postid == 'new') {
                 this.props.resetPost();
             }
         }

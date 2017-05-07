@@ -1,0 +1,187 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactBootstrap = require('react-bootstrap');
+
+var _reactTinymce = require('react-tinymce');
+
+var _reactTinymce2 = _interopRequireDefault(_reactTinymce);
+
+var _Layout = require('../components/Layout');
+
+var _Layout2 = _interopRequireDefault(_Layout);
+
+var _locale = require('../../share/util/locale');
+
+var _locale2 = _interopRequireDefault(_locale);
+
+var _global_config = require('../../share/global_config');
+
+var _global_config2 = _interopRequireDefault(_global_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var PostDisplayComponent = function (_React$Component) {
+    _inherits(PostDisplayComponent, _React$Component);
+
+    function PostDisplayComponent(props) {
+        _classCallCheck(this, PostDisplayComponent);
+
+        var _this = _possibleConstructorReturn(this, (PostDisplayComponent.__proto__ || Object.getPrototypeOf(PostDisplayComponent)).call(this, props));
+
+        _this.props = props;
+
+        _this.handlePostTitleChange = _this.handlePostTitleChange.bind(_this);
+        _this.handlePostURLChange = _this.handlePostURLChange.bind(_this);
+        _this.handlePostThumbChange = _this.handlePostThumbChange.bind(_this);
+        _this.handlePostFrontpagePhotoChange = _this.handlePostFrontpagePhotoChange.bind(_this);
+        _this.handlePostTagsChange = _this.handlePostTagsChange.bind(_this);
+        _this.handlePostAbstractChange = _this.handlePostAbstractChange.bind(_this);
+        _this.handlePostContentChange = _this.handlePostContentChange.bind(_this);
+
+        return _this;
+    }
+
+    _createClass(PostDisplayComponent, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+
+            if (this.props.postid != null && this.props.postid != '') {
+                console.log('postid', this.props.postid);
+                this.props.loadSinglePost(this.props.postid);
+            }
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            this.props.resetPost();
+        }
+    }, {
+        key: 'handlePostTitleChange',
+        value: function handlePostTitleChange(e) {
+            this.props.post.title = e.target.value;
+        }
+    }, {
+        key: 'handlePostURLChange',
+        value: function handlePostURLChange(e) {
+            this.props.post.url = e.target.value;
+        }
+    }, {
+        key: 'handlePostThumbChange',
+        value: function handlePostThumbChange(e) {
+            this.props.post.thumb = e.target.value;
+        }
+    }, {
+        key: 'handlePostFrontpagePhotoChange',
+        value: function handlePostFrontpagePhotoChange(e) {
+            this.props.post.frontpagephoto = e.target.value;
+        }
+    }, {
+        key: 'handlePostTagsChange',
+        value: function handlePostTagsChange(e) {
+            this.props.post.tags = e.target.value;
+        }
+    }, {
+        key: 'handlePostAbstractChange',
+        value: function handlePostAbstractChange(e) {
+            this.props.post.abstract = e.target.getContent();
+            console.log('Content was updated:', e.target.getContent());
+        }
+    }, {
+        key: 'handlePostContentChange',
+        value: function handlePostContentChange(e) {
+            this.props.post.content = e.target.getContent();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+
+            if (this.props.post.author == null) {
+                return null;
+            }
+
+            return _react2.default.createElement(
+                _Layout2.default,
+                null,
+                _react2.default.createElement(
+                    'h2',
+                    { className: 'title' },
+                    this.props.post.title
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'meta' },
+                    _react2.default.createElement(
+                        'ul',
+                        { className: 'meta-list list-inline' },
+                        _react2.default.createElement(
+                            'li',
+                            { className: 'updated' },
+                            _react2.default.createElement('i', { className: 'fa fa-calendar' }),
+                            this.props.post.lastmodified
+                        ),
+                        _react2.default.createElement(
+                            'li',
+                            { className: 'post-author updated' },
+                            _react2.default.createElement('i', { className: 'fa fa-user' }),
+                            ' ',
+                            _react2.default.createElement(
+                                'a',
+                                { href: this.props.post.author.userid },
+                                this.props.post.author.name
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'li',
+                            { className: 'post-comments-link updated' },
+                            _react2.default.createElement(
+                                'a',
+                                { href: '#comment-area' },
+                                _react2.default.createElement('i', { className: 'fa fa-comments' }),
+                                ' 0 Comments'
+                            )
+                        )
+                    )
+                ),
+                _react2.default.createElement('div', { className: 'content', dangerouslySetInnerHTML: { __html: this.props.post.content } })
+            );
+        }
+    }]);
+
+    return PostDisplayComponent;
+}(_react2.default.Component);
+
+PostDisplayComponent.PropTypes = {
+    post: _react2.default.PropTypes.object.isRequired
+};
+
+var _default = PostDisplayComponent;
+exports.default = _default;
+;
+
+var _temp = function () {
+    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+        return;
+    }
+
+    __REACT_HOT_LOADER__.register(PostDisplayComponent, 'PostDisplayComponent', '/home/ubuntu/workspace/app/components/PostDisplayComponent.jsx');
+
+    __REACT_HOT_LOADER__.register(_default, 'default', '/home/ubuntu/workspace/app/components/PostDisplayComponent.jsx');
+}();
+
+;

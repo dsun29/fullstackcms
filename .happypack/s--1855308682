@@ -1,0 +1,230 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactBootstrap = require('react-bootstrap');
+
+var _Layout = require('./Layout');
+
+var _Layout2 = _interopRequireDefault(_Layout);
+
+var _reactRouter = require('react-router');
+
+var _locale = require('../../share/util/locale');
+
+var _locale2 = _interopRequireDefault(_locale);
+
+var _global_config = require('../../share/global_config');
+
+var _global_config2 = _interopRequireDefault(_global_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var IndexComponent = function (_React$Component) {
+    _inherits(IndexComponent, _React$Component);
+
+    function IndexComponent(props) {
+        _classCallCheck(this, IndexComponent);
+
+        var _this = _possibleConstructorReturn(this, (IndexComponent.__proto__ || Object.getPrototypeOf(IndexComponent)).call(this, props));
+
+        _this.props = props;
+
+        _this.onSearch = _this.onSearch.bind(_this);
+
+        console.log('IndexComponent constructor');
+        return _this;
+    }
+
+    _createClass(IndexComponent, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+
+            console.log('IndexComponent componentWillMount');
+
+            this.props.loadSavedStates(this.props.queryParams);
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps) {
+
+            console.log('IndexComponent componentDidUpdate');
+
+            if (this.props.installing === true && prevProps.installing !== true) {
+                this.props.startInstallation();
+
+                return;
+            }
+
+            if ((this.props.queryParams.front !== prevProps.queryParams.front || this.props.queryParams.t !== prevProps.queryParams.t || this.props.queryParams.k !== prevProps.queryParams.k) && this.props.installing !== true) {
+
+                console.log('params in didUpdate', this.props.queryParams);
+                var queryParams = this.props.queryParams;
+                var condition = { front: 'y' };
+                if (queryParams.t != null && queryParams.t != '') {
+                    condition.keywords = queryParams.t;
+                }
+                if (queryParams.k != null && queryParams.k != '') {
+                    condition.keywords = queryParams.k;
+                }
+
+                this.props.loadPosts(condition);
+            }
+        }
+    }, {
+        key: 'onSearch',
+        value: function onSearch() {
+            var keywords = this.refs.keywordsInput.value;
+            if (keywords === null || keywords === undefined) {
+                return false;
+            }
+            keywords = keywords.trim();
+            if (keywords.length < 2) {
+                return false;
+            }
+            this.props.search(keywords);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                _Layout2.default,
+                null,
+                _react2.default.createElement(
+                    _reactBootstrap.Col,
+                    { md: 9 },
+                    this.props.posts.map(function (post) {
+                        return _react2.default.createElement(
+                            'div',
+                            { className: 'row post-row', key: post._id },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'meta col-md-2 col-sm-3 col-xs-12 text-right' },
+                                _react2.default.createElement(
+                                    'ul',
+                                    { className: 'meta-list list-unstyled' },
+                                    _react2.default.createElement(
+                                        'li',
+                                        { className: 'post-time post_date date updated' },
+                                        _react2.default.createElement(
+                                            'span',
+                                            { className: 'date' },
+                                            new Date(post.lastmodified).getDate()
+                                        ),
+                                        _react2.default.createElement(
+                                            'span',
+                                            { className: 'month' },
+                                            _locale2.default[_global_config2.default.locale].month_names_short[new Date(post.lastmodified).getMonth()]
+                                        )
+                                    ),
+                                    _react2.default.createElement(
+                                        'li',
+                                        { className: 'post-author' },
+                                        _react2.default.createElement(
+                                            'a',
+                                            { href: '#' },
+                                            post.author.name
+                                        )
+                                    ),
+                                    _react2.default.createElement(
+                                        'li',
+                                        { className: 'post-comments-link' },
+                                        'Comments: ',
+                                        _react2.default.createElement(
+                                            'a',
+                                            { href: '/post/first-angular2-project#comment-area' },
+                                            '0'
+                                        )
+                                    )
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'content-wrapper col-md-9 col-sm-9 col-xs-12' },
+                                _react2.default.createElement(
+                                    'h3',
+                                    { className: 'post-title' },
+                                    _react2.default.createElement(
+                                        _reactRouter.Link,
+                                        { to: '/post2/' + post._id },
+                                        post.title
+                                    )
+                                ),
+                                post.frontpagephoto ? _react2.default.createElement('img', { className: 'frontpagephoto', src: '/' + post.frontpagephoto }) : null,
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'content' },
+                                    _react2.default.createElement('p', { dangerouslySetInnerHTML: { __html: post.abstract } }),
+                                    _react2.default.createElement(
+                                        _reactRouter.Link,
+                                        { to: '/post2/' + post._id },
+                                        'Read more ',
+                                        _react2.default.createElement('i', { className: 'fa fa-long-arrow-right' })
+                                    )
+                                )
+                            )
+                        );
+                    })
+                ),
+                _react2.default.createElement(
+                    _reactBootstrap.Col,
+                    { md: 3 },
+                    _react2.default.createElement(
+                        _reactBootstrap.FormGroup,
+                        null,
+                        _react2.default.createElement(
+                            _reactBootstrap.InputGroup,
+                            null,
+                            _react2.default.createElement('input', { className: 'form-control',
+                                type: 'text',
+                                defaultValue: this.props.queryParams.k,
+                                ref: 'keywordsInput'
+                            }),
+                            _react2.default.createElement(
+                                _reactBootstrap.InputGroup.Addon,
+                                { onClick: function onClick() {
+                                        return _this2.onSearch();
+                                    } },
+                                _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'search' })
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return IndexComponent;
+}(_react2.default.Component);
+
+var _default = IndexComponent;
+exports.default = _default;
+;
+
+var _temp = function () {
+    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+        return;
+    }
+
+    __REACT_HOT_LOADER__.register(IndexComponent, 'IndexComponent', '/home/ubuntu/workspace/app/components/IndexComponent.jsx');
+
+    __REACT_HOT_LOADER__.register(_default, 'default', '/home/ubuntu/workspace/app/components/IndexComponent.jsx');
+}();
+
+;

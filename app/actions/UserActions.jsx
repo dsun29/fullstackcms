@@ -175,3 +175,68 @@ export function Logout_Action(){
         })
 	}
 }
+
+/****************************************************************************/
+
+export function Update_Config_Action(newConfigValue){
+    
+    
+    
+	return function (dispatch){
+	    
+	    dispatch(Open_Spinner());
+	    
+		return reqwest({
+            url: config.service_root_url + 'api/config',
+            method: 'post',
+            type: 'json',
+            contentType: 'application/x-www-form-urlencoded',
+            crossOrigin: true,
+            data: newConfigValue,
+			withCredentials: true,
+            error: function(err){
+                 console.log('Update_Config_Action error = ', err);
+                 
+                 dispatch(Close_Spinner());
+            },
+            success: function (response) {
+              	
+              	console.log('Update_Config_Action good = ', response);
+              	dispatch(Close_Spinner());
+              	
+            }
+
+        })
+	}
+}
+
+/****************************************************************************/
+
+export function Set_Configurations_Action(newConfigValues){
+    
+    dispatch(Open_Spinner());
+    
+	return function (dispatch){
+		return reqwest({
+            url: config.service_root_url + 'api/installation',
+            method: 'post',
+            type: 'json',
+            contentType: 'application/x-www-form-urlencoded',
+            crossOrigin: true,
+            data: newConfigValues,
+			withCredentials: true,
+            error: function(err){
+                 console.log('Update_Config_Action error = ', err);
+                 
+                 dispatch(Close_Spinner());
+            },
+            success: function (response) {
+              	
+              	console.log('Update_Config_Action good = ', response);
+              	dispatch(Close_Spinner());
+              	
+            }
+
+        })
+	}
+}

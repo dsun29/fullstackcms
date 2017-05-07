@@ -1,0 +1,61 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = require('react-redux');
+
+var _LoginComponent = require('../components/LoginComponent');
+
+var _LoginComponent2 = _interopRequireDefault(_LoginComponent);
+
+var _UserActions = require('../actions/UserActions');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state, props) {
+	return {
+		userid: state.UserReducer.userid ? state.UserReducer.userid : null,
+		displayname: state.UserReducer.displayname ? state.UserReducer.displayname : 'Guest'
+
+	};
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	return {
+		onGoogleLogin: function onGoogleLogin(response) {
+			dispatch((0, _UserActions.Google_Login_Action)(response));
+		},
+		onTwitterLoginStart: function onTwitterLoginStart() {
+			dispatch((0, _UserActions.Twitter_Login_Start_Action)());
+		},
+		startInstallation: function startInstallation() {}
+	};
+};
+
+var LoginContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_LoginComponent2.default);
+
+var _default = LoginContainer;
+exports.default = _default;
+;
+
+var _temp = function () {
+	if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+		return;
+	}
+
+	__REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/home/ubuntu/workspace/app/containers/LoginContainer.jsx');
+
+	__REACT_HOT_LOADER__.register(mapDispatchToProps, 'mapDispatchToProps', '/home/ubuntu/workspace/app/containers/LoginContainer.jsx');
+
+	__REACT_HOT_LOADER__.register(LoginContainer, 'LoginContainer', '/home/ubuntu/workspace/app/containers/LoginContainer.jsx');
+
+	__REACT_HOT_LOADER__.register(_default, 'default', '/home/ubuntu/workspace/app/containers/LoginContainer.jsx');
+}();
+
+;

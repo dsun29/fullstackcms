@@ -1,0 +1,59 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = require('react-redux');
+
+var _UserActions = require('../actions/UserActions');
+
+var _ModalDialogComponent = require('../components/ModalDialogComponent');
+
+var _ModalDialogComponent2 = _interopRequireDefault(_ModalDialogComponent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//({showDialog, dialogTitle, dialogBody, onClose}) 
+var mapStateToProps = function mapStateToProps(state) {
+	return {
+		showDialog: state.UserReducer.showDialog,
+		dialogTitle: state.UserReducer.dialogTitle,
+		dialogBody: state.UserReducer.dialogBody,
+		onDialogClose: state.UserReducer.onDialogClose
+	};
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	return {
+		onClose: function onClose() {
+			dispatch((0, _UserActions.Close_Dialog)());
+		}
+	};
+};
+
+var ModalDialogContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_ModalDialogComponent2.default);
+
+var _default = ModalDialogContainer;
+exports.default = _default;
+;
+
+var _temp = function () {
+	if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+		return;
+	}
+
+	__REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/home/ubuntu/workspace/app/containers/ModalDialogContainer.jsx');
+
+	__REACT_HOT_LOADER__.register(mapDispatchToProps, 'mapDispatchToProps', '/home/ubuntu/workspace/app/containers/ModalDialogContainer.jsx');
+
+	__REACT_HOT_LOADER__.register(ModalDialogContainer, 'ModalDialogContainer', '/home/ubuntu/workspace/app/containers/ModalDialogContainer.jsx');
+
+	__REACT_HOT_LOADER__.register(_default, 'default', '/home/ubuntu/workspace/app/containers/ModalDialogContainer.jsx');
+}();
+
+;

@@ -1,0 +1,68 @@
+'use strict';
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactRouter = require('react-router');
+
+var _helpers = require('../helpers');
+
+var _reactRedux = require('react-redux');
+
+var _App = require('./App');
+
+var _App2 = _interopRequireDefault(_App);
+
+var _About = require('./About');
+
+var _About2 = _interopRequireDefault(_About);
+
+var _LoginContainer = require('../containers/LoginContainer');
+
+var _LoginContainer2 = _interopRequireDefault(_LoginContainer);
+
+var _SinglePostContainer = require('../containers/SinglePostContainer');
+
+var _SinglePostContainer2 = _interopRequireDefault(_SinglePostContainer);
+
+var _EditorPostListContainer = require('../containers/EditorPostListContainer');
+
+var _EditorPostListContainer2 = _interopRequireDefault(_EditorPostListContainer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var store = (0, _helpers.makeStore)({ UserReducer: { showDialog: false, dialogTitle: '', dialogBody: '', showSpinner: false } });
+
+var shell = document.createElement('main');
+document.body.appendChild(shell);
+
+(0, _reactDom.render)(_react2.default.createElement(
+		_reactRedux.Provider,
+		{ store: store },
+		_react2.default.createElement(
+				_reactRouter.Router,
+				{ history: _reactRouter.browserHistory },
+				_react2.default.createElement(_reactRouter.Route, { path: '/', component: _App2.default }),
+				_react2.default.createElement(_reactRouter.Route, { path: '/about', component: _About2.default }),
+				_react2.default.createElement(_reactRouter.Route, { path: '/login', component: _LoginContainer2.default }),
+				_react2.default.createElement(_reactRouter.Route, { path: '/post', component: _SinglePostContainer2.default }),
+				_react2.default.createElement(_reactRouter.Route, { path: '/me', component: _EditorPostListContainer2.default }),
+				_react2.default.createElement(_reactRouter.Route, { path: '*', component: _About2.default })
+		)
+), shell);
+;
+
+var _temp = function () {
+		if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+				return;
+		}
+
+		__REACT_HOT_LOADER__.register(shell, 'shell', '/home/ubuntu/workspace/app/components/index.jsx');
+
+		__REACT_HOT_LOADER__.register(store, 'store', '/home/ubuntu/workspace/app/components/index.jsx');
+}();
+
+;

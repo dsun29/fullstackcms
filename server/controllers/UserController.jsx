@@ -1,11 +1,13 @@
-import config from '../server.dev.config';
+import config from '../fullstackcms.config';
 import Controller from './Controller';
 import DB from '../util/DB';
 import debug from 'debug';
 import https from 'https';
 import locale from '../../share/util/locale';
 import twitterAPI from 'node-twitter-api';
-
+import fs from 'fs';
+import HttpStatus from 'http-status-codes';
+import { MongoClient } from 'mongodb';
 
 const twitter = new twitterAPI({
 	consumerKey: config.consumerKey,
@@ -272,7 +274,7 @@ class UserController extends Controller {
 							if (error2) {
 								debug(error2);
 							}
-							res.statusCode = 500;
+							res.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 							res.send(error2);
 							
 							return;
@@ -284,18 +286,21 @@ class UserController extends Controller {
 		
 	}
 	
-	getStoredState (req, res) {
+	getInitState (req, res) {
 		// oauth_token is given by Twitter, do not change it
 		const twitterOoauthToken = req.body.oauth_token; 
 		const twitterOauthVerifier = req.body.oauth_verifier;
 		
 		// this is a redirect from Twitter with succesul login
-		if (twitterOoauthToken !== null && twitterOauthVerifier !== null) { 
+		if (typeof twitterOoauthToken !== 'undefined' && typeof twitterOauthVerifier !== 'undefined') { 
+			
+			console.log('twitter redirect', req.body, typeof twitterOoauthToken);
+			
 			return this.twitterAccessToken(req, res);
 		}
 		
 		// refresh home page
-		if (req.session !== null && req.session.userid !== null) { 
+		if (typeof req.session !== 'undefined' && typeof req.session.userid !== 'undefined') { 
 		
 			return res.send({	
 				userid: req.session.userid, 
@@ -303,10 +308,22 @@ class UserController extends Controller {
 			});
 		}
 		
-		return res.send({});
+		//check whether it is an initial install
+    	if (config.mongo_connection_str === null || typeof config.mongo_connection_str === 'undefined' 
+    	|| config.mongo_connection_str === '' || config.installed === false) {
+    	
+	    	return res.send({	
+				installing: true 
+			});
+    	}
+    	
+    	return res.send({	
+				installing: false 
+		});
+		    
 	}
 	
-	static logout (req, res) {
+	logout (req, res) {
 		if (req.session) {
 			req.session.destroy((err) => {
 				
@@ -320,6 +337,124 @@ class UserController extends Controller {
 		}
 
 		res.send();
+	}
+	
+	//update system application
+	updateConfig (req, res) {
+		let dbStr = req.body.db;
+		if (!(typeof dbStr === 'undefined')) {
+			
+			fs.access(config.config_file, fs.F_OK, function(err) {
+				
+					if(err){
+						res.statusCode = HttpStatus.BAD_REQUEST;
+						return res.send({message: 'Unable to open config file'});
+					}
+					
+					//check if the mongodb url is valid
+					try {
+						MongoClient.connect(dbStr, function(err, db) {
+							if(err) {
+								res.statusCode = HttpStatus.BAD_REQUEST;
+								return res.send({message: 'Unable to connec to MongoDB'});
+							}
+							else {
+								config.mongo_connection_str = dbStr;
+								fs.writeFile(config.config_file, JSON.stringify(config, null, 2) , 'utf-8');
+								return res.send({});
+								
+							}
+						});
+					}
+					catch (err){
+						console.log(err.message);
+						res.statusCode = HttpStatus.BAD_REQUEST;
+						return res.send(err.message);
+					}
+			});
+
+		}
+		
+		let siteTitle = req.body.title;
+		if (!(typeof siteTitle === 'undefined')) {
+			
+			config.title = siteTitle;
+			fs.writeFile(config.config_file, JSON.stringify(config, null, 2) , 'utf-8');
+			return res.send({});
+		}
+		
+		
+		let googleClientId = req.body.googleClientId;
+		if (!(typeof googleClientId === 'undefined')) {
+			
+			config.google_client_id = googleClientId;
+			fs.writeFile(config.config_file, JSON.stringify(config, null, 2) , 'utf-8');
+			return res.send({});
+		}
+		
+		let twitterConsumerKey = req.body.twitterConsumerKey;
+		let twitterConsumerSecret = req.body.twitterConsumerSecret;
+		
+		if (!(typeof twitterConsumerKey === 'undefined') && !(typeof twitterConsumerSecret === 'undefined')) {
+			
+			config.twitter_consumer_key = twitterConsumerKey;
+			config.twitter_consumer_secret = twitterConsumerSecret;
+			fs.writeFile(config.config_file, JSON.stringify(config, null, 2) , 'utf-8');
+			return res.send({});
+		}
+		
+		res.statusCode = HttpStatus.BAD_REQUEST;
+		return res.send('Field name is not understood');
+		
+	}
+	
+	install(req, res) {
+		let dbStr = req.body.db;
+		let siteTitle = req.body.siteTitle;
+		let adminEmail = req.body.adminEmail;
+		let adminPassword = req.body.adminPassword;
+		
+		if (typeof dbStr === 'undefined'){
+			res.statusCode = HttpStatus.BAD_REQUEST;
+			return res.send('Database connection string is missing');
+		}
+		
+		if (typeof siteTitle === 'undefined'){
+			res.statusCode = HttpStatus.BAD_REQUEST;
+			return res.send('Site title is missing');
+		}
+		
+		if (typeof adminEmail === 'undefined'){
+			res.statusCode = HttpStatus.BAD_REQUEST;
+			return res.send('Admin\' email address is missing');
+		}
+		
+		if (typeof adminPassword === 'undefined'){
+			res.statusCode = HttpStatus.BAD_REQUEST;
+			return res.send('Admin\' password is missing');
+		}
+		
+		try {
+			MongoClient.connect(dbStr, function(err, db) {
+				if(err) {
+					res.statusCode = HttpStatus.BAD_REQUEST;
+					return res.send({message: 'Unable to connec to MongoDB'});
+				}
+				else {
+					config.mongo_connection_str = dbStr;
+					fs.writeFile(config.config_file, JSON.stringify(config, null, 2) , 'utf-8');
+					return res.send({});
+					
+				}
+			});
+		}
+		catch (err){
+			console.log(err.message);
+			res.statusCode = HttpStatus.BAD_REQUEST;
+			return res.send(err.message);
+		}
+		
+		
 	}
 }
 

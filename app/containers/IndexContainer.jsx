@@ -8,12 +8,13 @@ import {State_Initialization_Action} from '../actions/UserActions'
 import {browserHistory} from "react-router";
 
 const mapStateToProps = (state, props) =>{
-	console.log('params in container', props.location.query);
+	
 
 	return {
 		userid: state.UserReducer.userid ? state.UserReducer.userid : null,
 		displayname: state.UserReducer.displayname ? state.UserReducer.displayname : 'Guest',
 		posts: state.PostReducer.posts ? state.PostReducer.posts : [],
+		installing: state.UserReducer.installing,
 		queryParams: props.location.query,
 		tag: props.location.query.t,
 		keywords: props.location.query.k //we must keep it, just for fun
@@ -37,7 +38,11 @@ const mapDispatchToProps = (dispatch) => {
 				return null;
 			}
 			browserHistory.push('/?k=' + keywords);
+		},
+		startInstallation: () => {
+			browserHistory.push('/install');
 		}
+		
 		
 	}
 }

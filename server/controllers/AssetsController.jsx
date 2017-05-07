@@ -1,7 +1,7 @@
 import https from 'https'
 import locale from '../../share/util/locale'
 import DB from '../util/DB'
-import config from '../server.dev.config'
+import config from '../fullstackcms.configs';
 import Controller from './Controller'
 import twitterAPI from 'node-twitter-api'
 

@@ -1,0 +1,235 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Remove_Post_Action = exports.Init_Post_Action = exports.Load_Single_Post_Fail_Action = exports.Load_Single_Post_Succeed_Action = exports.Load_Single_Post_Action = exports.Load_Start_Action = exports.Load_Posts_Fail_Action = exports.Load_Posts_Succeed_Action = exports.Load_Posts_Action = exports.Save_Start_Action = exports.Save_Fail_Action = exports.Save_Succeed_Action = exports.Save_Post_Action = undefined;
+
+var _reqwest = require('reqwest');
+
+var _reqwest2 = _interopRequireDefault(_reqwest);
+
+var _UserActions = require('./UserActions');
+
+var _global_config = require('../../share/global_config');
+
+var _global_config2 = _interopRequireDefault(_global_config);
+
+var _reactRouter = require('react-router');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Save_Post_Action = exports.Save_Post_Action = function Save_Post_Action(post) {
+
+  console.log(post);
+
+  return function (dispatch) {
+    dispatch((0, _UserActions.Open_Spinner)());
+    return (0, _reqwest2.default)({
+      url: _global_config2.default.service_root_url + 'api/post',
+      method: 'post',
+      type: 'json',
+      withCredentials: true,
+      data: { post: JSON.stringify(post) },
+      error: function error(err) {
+        console.log('error in save_post_action = ', err);
+        dispatch((0, _UserActions.Close_Spinner)());
+        dispatch(Save_Fail_Action(err));
+        dispatch((0, _UserActions.Open_Dialog)('Failed to save post', err.stack, null));
+      },
+
+      success: function success(response) {
+        console.log('successfully saved post', response);
+
+        dispatch((0, _UserActions.Close_Spinner)());
+        dispatch(Save_Succeed_Action(response));
+        dispatch((0, _UserActions.Open_Dialog)('Successfully Saved', 'The new post is successfully saved.', function () {
+          _reactRouter.browserHistory.push('/post/' + response._id + '?mode=edit');dispatch((0, _UserActions.Close_Dialog)());
+        }));
+      }
+
+    });
+  };
+};
+
+var Save_Succeed_Action = exports.Save_Succeed_Action = function Save_Succeed_Action(post) {
+
+  return {
+    type: 'SAVE_POST_SUCCEED',
+    post: post
+  };
+};
+
+var Save_Fail_Action = exports.Save_Fail_Action = function Save_Fail_Action(error) {
+  return {
+    type: 'SAVE_POST_FAIL',
+    error: error
+  };
+};
+
+var Save_Start_Action = exports.Save_Start_Action = function Save_Start_Action(error) {
+  return {
+    type: 'SAVE_POST_START',
+    loading: true,
+    loaded: false
+  };
+};
+
+/*********************************************************/
+var Load_Posts_Action = exports.Load_Posts_Action = function Load_Posts_Action(condition) {
+  return function (dispatch) {
+
+    return (0, _reqwest2.default)({
+      url: _global_config2.default.service_root_url + 'api/posts',
+      method: 'get',
+      type: 'json',
+      contentType: 'application/x-www-form-urlencoded',
+      withCredentials: true,
+      data: condition,
+      error: function error(err) {
+        dispatch((0, _UserActions.Open_Dialog)('Failed to load posts', err.responseText, null));
+        dispatch(Load_Posts_Fail_Action(err));
+      },
+      success: function success(response) {
+        console.log(response);
+        dispatch(Load_Posts_Succeed_Action(response));
+      }
+
+    });
+  };
+};
+
+var Load_Posts_Succeed_Action = exports.Load_Posts_Succeed_Action = function Load_Posts_Succeed_Action(posts) {
+  return {
+    type: 'LOAD_POSTS_SUCCEED',
+    posts: posts
+  };
+};
+
+var Load_Posts_Fail_Action = exports.Load_Posts_Fail_Action = function Load_Posts_Fail_Action(error) {
+  return {
+    type: 'LOAD_POSTS_FAIL',
+    error: error
+  };
+};
+
+var Load_Start_Action = exports.Load_Start_Action = function Load_Start_Action() {
+  return {
+    type: 'LOAD_POSTS_START'
+
+  };
+};
+
+/*********************************************************/
+var Load_Single_Post_Action = exports.Load_Single_Post_Action = function Load_Single_Post_Action(postid) {
+
+  if (postid == null || postid == '') {
+    dispatch(Init_Post());
+    return;
+  }
+
+  return function (dispatch) {
+
+    return (0, _reqwest2.default)({
+      url: _global_config2.default.service_root_url + 'api/post/' + postid,
+      method: 'get',
+      type: 'json',
+      contentType: 'application/x-www-form-urlencoded',
+      withCredentials: true,
+      error: function error(err) {
+        dispatch((0, _UserActions.Open_Dialog)('Failed to load the post', err.responseText, null));
+        dispatch(Load_Single_Post_Fail_Action(err));
+      },
+      success: function success(response) {
+        console.log(response);
+        dispatch(Load_Single_Post_Succeed_Action(response));
+      }
+
+    });
+  };
+};
+
+var Load_Single_Post_Succeed_Action = exports.Load_Single_Post_Succeed_Action = function Load_Single_Post_Succeed_Action(post) {
+  return {
+    type: 'LOAD_SINGLE_POST_SUCCEED',
+    post: post
+  };
+};
+
+var Load_Single_Post_Fail_Action = exports.Load_Single_Post_Fail_Action = function Load_Single_Post_Fail_Action(error) {
+  return {
+    type: 'LOAD_SINGLE_POST_FAIL',
+    error: error
+  };
+};
+
+var Init_Post_Action = exports.Init_Post_Action = function Init_Post_Action() {
+  return {
+    type: 'INIT_POST'
+  };
+};
+
+/********************************************************************************/
+var Remove_Post_Action = exports.Remove_Post_Action = function Remove_Post_Action(postid) {
+
+  return function (dispatch) {
+    dispatch((0, _UserActions.Open_Spinner)());
+    return (0, _reqwest2.default)({
+      url: _global_config2.default.service_root_url + 'api/post/' + postid,
+      method: 'delete',
+      type: 'json',
+      withCredentials: true,
+      data: { post: JSON.stringify(post) },
+      error: function error(err) {
+        console.log('error in save_post_action = ', err);
+        dispatch((0, _UserActions.Close_Spinner)());
+        dispatch(Save_Fail_Action(err));
+        dispatch((0, _UserActions.Open_Dialog)('Failed to save post', err.stack, null));
+      },
+
+      success: function success(response) {
+        console.log('successfully saved post', response);
+
+        dispatch((0, _UserActions.Close_Spinner)());
+        //dispatch(Save_Succeed_Action(response));
+        //dispatch(Open_Dialog('Successfully Saved', 'The new post is successfully saved.', function(){browserHistory.push('/post/' + response._id + '?mode=edit'); dispatch(Close_Dialog());}));
+      }
+
+    });
+  };
+};
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(Save_Post_Action, 'Save_Post_Action', '/home/ubuntu/workspace/app/actions/PostActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Save_Succeed_Action, 'Save_Succeed_Action', '/home/ubuntu/workspace/app/actions/PostActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Save_Fail_Action, 'Save_Fail_Action', '/home/ubuntu/workspace/app/actions/PostActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Save_Start_Action, 'Save_Start_Action', '/home/ubuntu/workspace/app/actions/PostActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Load_Posts_Action, 'Load_Posts_Action', '/home/ubuntu/workspace/app/actions/PostActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Load_Posts_Succeed_Action, 'Load_Posts_Succeed_Action', '/home/ubuntu/workspace/app/actions/PostActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Load_Posts_Fail_Action, 'Load_Posts_Fail_Action', '/home/ubuntu/workspace/app/actions/PostActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Load_Start_Action, 'Load_Start_Action', '/home/ubuntu/workspace/app/actions/PostActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Load_Single_Post_Action, 'Load_Single_Post_Action', '/home/ubuntu/workspace/app/actions/PostActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Load_Single_Post_Succeed_Action, 'Load_Single_Post_Succeed_Action', '/home/ubuntu/workspace/app/actions/PostActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Load_Single_Post_Fail_Action, 'Load_Single_Post_Fail_Action', '/home/ubuntu/workspace/app/actions/PostActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Init_Post_Action, 'Init_Post_Action', '/home/ubuntu/workspace/app/actions/PostActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Remove_Post_Action, 'Remove_Post_Action', '/home/ubuntu/workspace/app/actions/PostActions.jsx');
+}();
+
+;

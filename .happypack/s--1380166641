@@ -1,0 +1,54 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+   value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// eslint-disable-line import/no-extraneous-dependencies
+
+
+var SpinnerComponent = function SpinnerComponent(_ref) {
+   var showSpinner = _ref.showSpinner;
+   return showSpinner ? _react2.default.createElement(
+      'div',
+      { className: 'spinner-modal' },
+      _react2.default.createElement(
+         'div',
+         { className: 'spin-circle-wrapper' },
+         _react2.default.createElement('div', { className: 'circle1 circle' }),
+         _react2.default.createElement('div', { className: 'circle2 circle' }),
+         _react2.default.createElement('div', { className: 'circle3 circle' }),
+         _react2.default.createElement('div', { className: 'circle4 circle' }),
+         _react2.default.createElement('div', { className: 'circle5 circle' }),
+         _react2.default.createElement('div', { className: 'circle6 circle' }),
+         _react2.default.createElement('div', { className: 'circle7 circle' }),
+         _react2.default.createElement('div', { className: 'circle8 circle' }),
+         _react2.default.createElement('div', { className: 'circle9 circle' }),
+         _react2.default.createElement('div', { className: 'circle10 circle' }),
+         _react2.default.createElement('div', { className: 'circle11 circle' }),
+         _react2.default.createElement('div', { className: 'circle12 circle' })
+      )
+   ) : null;
+};
+
+var _default = SpinnerComponent;
+exports.default = _default;
+;
+
+var _temp = function () {
+   if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+      return;
+   }
+
+   __REACT_HOT_LOADER__.register(SpinnerComponent, 'SpinnerComponent', '/home/ubuntu/workspace/app/components/SpinnerComponent.jsx');
+
+   __REACT_HOT_LOADER__.register(_default, 'default', '/home/ubuntu/workspace/app/components/SpinnerComponent.jsx');
+}();
+
+;

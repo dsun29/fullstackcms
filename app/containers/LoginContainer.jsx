@@ -21,6 +21,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		onTwitterLoginStart: () =>{
 			dispatch(Twitter_Login_Start_Action());
+		},
+		startInstallation: () => {
+			
 		}
 	}
 }

@@ -1,0 +1,44 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = require('react-redux');
+
+var _SpinnerComponent = require('../components/SpinnerComponent');
+
+var _SpinnerComponent2 = _interopRequireDefault(_SpinnerComponent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//({showDialog, dialogTitle, dialogBody, onClose}) 
+var mapStateToProps = function mapStateToProps(state) {
+	return {
+		showSpinner: state.UserReducer.showSpinner
+	};
+};
+
+var SpinnerContainer = (0, _reactRedux.connect)(mapStateToProps)(_SpinnerComponent2.default);
+
+var _default = SpinnerContainer;
+exports.default = _default;
+;
+
+var _temp = function () {
+	if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+		return;
+	}
+
+	__REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/home/ubuntu/workspace/app/containers/SpinnerContainer.jsx');
+
+	__REACT_HOT_LOADER__.register(SpinnerContainer, 'SpinnerContainer', '/home/ubuntu/workspace/app/containers/SpinnerContainer.jsx');
+
+	__REACT_HOT_LOADER__.register(_default, 'default', '/home/ubuntu/workspace/app/containers/SpinnerContainer.jsx');
+}();
+
+;

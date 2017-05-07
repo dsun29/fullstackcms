@@ -1,0 +1,426 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactBootstrap = require('react-bootstrap');
+
+var _reactTinymce = require('react-tinymce');
+
+var _reactTinymce2 = _interopRequireDefault(_reactTinymce);
+
+var _Layout = require('../components/Layout');
+
+var _Layout2 = _interopRequireDefault(_Layout);
+
+var _locale = require('../../share/util/locale');
+
+var _locale2 = _interopRequireDefault(_locale);
+
+var _global_config = require('../../share/global_config');
+
+var _global_config2 = _interopRequireDefault(_global_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SinglePostComponent = function (_React$Component) {
+    _inherits(SinglePostComponent, _React$Component);
+
+    function SinglePostComponent(props) {
+        _classCallCheck(this, SinglePostComponent);
+
+        var _this = _possibleConstructorReturn(this, (SinglePostComponent.__proto__ || Object.getPrototypeOf(SinglePostComponent)).call(this, props));
+
+        _this.props = props;
+
+        _this.handlePostTitleChange = _this.handlePostTitleChange.bind(_this);
+        _this.handlePostURLChange = _this.handlePostURLChange.bind(_this);
+        _this.handlePostThumbChange = _this.handlePostThumbChange.bind(_this);
+        _this.handlePostFrontpagePhotoChange = _this.handlePostFrontpagePhotoChange.bind(_this);
+        _this.handlePostTagsChange = _this.handlePostTagsChange.bind(_this);
+        _this.handlePostAbstractChange = _this.handlePostAbstractChange.bind(_this);
+        _this.handlePostContentChange = _this.handlePostContentChange.bind(_this);
+        _this.handlePublished = _this.handlePublished.bind(_this);
+
+        return _this;
+    }
+
+    _createClass(SinglePostComponent, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+
+            console.log('check state change in componentWillMount - ', this.props.post, this.props.mode);
+
+            if (this.props.postid != null && this.props.postid != '' && this.props.postid != 'new') {
+                this.props.loadSinglePost(this.props.postid);
+            } else if (this.props.postid == 'new') {
+                this.props.resetPost();
+            }
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            this.props.resetPost();
+        }
+    }, {
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(nextProps) {
+
+            if (nextProps.postid != this.props.postid) {
+                if (nextProps.postid != null && nextProps.postid != '' && nextProps.postid != 'new') {
+                    this.props.loadSinglePost(nextProps.postid);
+                } else if (nextProps.postid == 'new') {
+                    this.props.resetPost();
+                }
+            }
+        }
+    }, {
+        key: 'handlePostTitleChange',
+        value: function handlePostTitleChange(e) {
+            this.props.post.title = e.target.value;
+        }
+    }, {
+        key: 'handlePostURLChange',
+        value: function handlePostURLChange(e) {
+            this.props.post.url = e.target.value;
+        }
+    }, {
+        key: 'handlePostThumbChange',
+        value: function handlePostThumbChange(e) {
+            this.props.post.thumb = e.target.value;
+        }
+    }, {
+        key: 'handlePostFrontpagePhotoChange',
+        value: function handlePostFrontpagePhotoChange(e) {
+            this.props.post.frontpagephoto = e.target.value;
+        }
+    }, {
+        key: 'handlePostTagsChange',
+        value: function handlePostTagsChange(e) {
+            this.props.post.tags = e.target.value;
+        }
+    }, {
+        key: 'handlePublished',
+        value: function handlePublished(e) {
+            this.props.post.published = e.target.checked;
+        }
+    }, {
+        key: 'handlePostAbstractChange',
+        value: function handlePostAbstractChange(e) {
+            this.props.post.abstract = e.target.getContent();
+            console.log('Content was updated:', e.target.getContent());
+        }
+    }, {
+        key: 'handlePostContentChange',
+        value: function handlePostContentChange(e) {
+            this.props.post.content = e.target.getContent();
+        }
+    }, {
+        key: 'renderDisplay',
+        value: function renderDisplay() {
+            return _react2.default.createElement(
+                _Layout2.default,
+                null,
+                _react2.default.createElement(
+                    'h2',
+                    { className: 'title' },
+                    this.props.post.title
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'meta' },
+                    _react2.default.createElement(
+                        'ul',
+                        { className: 'meta-list list-inline' },
+                        _react2.default.createElement(
+                            'li',
+                            { className: 'updated' },
+                            _react2.default.createElement('i', { className: 'fa fa-calendar' }),
+                            this.props.post.lastmodified
+                        ),
+                        _react2.default.createElement(
+                            'li',
+                            { className: 'post-author updated' },
+                            _react2.default.createElement('i', { className: 'fa fa-user' }),
+                            ' ',
+                            _react2.default.createElement(
+                                'a',
+                                { href: this.props.post.author.userid },
+                                this.props.post.author.name
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'li',
+                            { className: 'post-comments-link updated' },
+                            _react2.default.createElement(
+                                'a',
+                                { href: '#comment-area' },
+                                _react2.default.createElement('i', { className: 'fa fa-comments' }),
+                                ' 0 Comments'
+                            )
+                        )
+                    )
+                ),
+                _react2.default.createElement('div', { className: 'content', dangerouslySetInnerHTML: { __html: this.props.post.content } })
+            );
+        }
+    }, {
+        key: 'renderEdit',
+        value: function renderEdit() {
+            var _this2 = this;
+
+            if (this.props.userid == null) {
+                return _react2.default.createElement(
+                    _Layout2.default,
+                    null,
+                    _locale2.default[_global_config2.default.locale].no_auth
+                );
+            }
+
+            if (this.props.postid != '' && this.props.postid != null && this.props.postid != 'new' && this.props.post.author != null && this.props.post.author.userid != this.props.userid) {
+
+                return _react2.default.createElement(
+                    _Layout2.default,
+                    null,
+                    _locale2.default[_global_config2.default.locale].no_auth
+                );
+            }
+
+            if (this.props.postid != '' && this.props.postid != null && this.props.postid != 'new' && (this.props.post.title == null || this.props.post.title == '')) {
+                return null;
+            }
+
+            return _react2.default.createElement(
+                _Layout2.default,
+                { key: this.props.postid },
+                _react2.default.createElement(
+                    _reactBootstrap.Form,
+                    { horizontal: true },
+                    _react2.default.createElement(
+                        _reactBootstrap.FormGroup,
+                        { controlId: 'formHorizontalEmail' },
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { componentClass: _reactBootstrap.ControlLabel, sm: 2 },
+                            'Title'
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { sm: 10 },
+                            _react2.default.createElement(_reactBootstrap.FormControl, {
+                                type: 'text',
+                                placeholder: 'Post title',
+                                defaultValue: this.props.post.title,
+                                onChange: this.handlePostTitleChange
+                            })
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.FormGroup,
+                        { controlId: 'formHorizontalEmail' },
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { componentClass: _reactBootstrap.ControlLabel, sm: 2 },
+                            'URL'
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { sm: 10 },
+                            _react2.default.createElement(_reactBootstrap.FormControl, {
+                                type: 'text',
+                                placeholder: 'Post url',
+                                defaultValue: this.props.post.url,
+                                onChange: this.handlePostURLChange })
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.FormGroup,
+                        { controlId: 'formHorizontalThumbPHoto' },
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { componentClass: _reactBootstrap.ControlLabel, sm: 2 },
+                            'Thumb Photo'
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { sm: 10 },
+                            _react2.default.createElement(_reactBootstrap.FormControl, {
+                                type: 'text',
+                                placeholder: 'URL for your thumb photo',
+                                ref: function ref(_ref) {
+                                    return _this2.refPostUrl = _ref;
+                                },
+                                defaultValue: this.props.post.thumb,
+                                onChange: this.handlePostThumbChange })
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.FormGroup,
+                        { controlId: 'formHorizontalFrontPHoto' },
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { componentClass: _reactBootstrap.ControlLabel, sm: 2 },
+                            'Front Photo'
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { sm: 10 },
+                            _react2.default.createElement(_reactBootstrap.FormControl, {
+                                type: 'text',
+                                placeholder: 'URL for your front page photo',
+                                defaultValue: this.props.post.frontpagephoto,
+                                onChange: this.handlePostFrontpagePhotoChange })
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.FormGroup,
+                        { controlId: 'formHorizontalTags' },
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { componentClass: _reactBootstrap.ControlLabel, sm: 2 },
+                            'Tags'
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { sm: 10 },
+                            _react2.default.createElement(_reactBootstrap.FormControl, {
+                                type: 'text',
+                                placeholder: 'Tags; separated by comma',
+                                defaultValue: this.props.post.tags,
+                                onChange: this.handlePostTagsChange
+
+                            })
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.FormGroup,
+                        null,
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { smOffset: 2, sm: 10 },
+                            _react2.default.createElement(
+                                _reactBootstrap.Checkbox,
+                                { defaultChecked: this.props.post.published, onClick: this.handlePublished },
+                                'Publish'
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.FormGroup,
+                        null,
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { componentClass: _reactBootstrap.ControlLabel, sm: 2 },
+                            'Abstract'
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { sm: 10 },
+                            _react2.default.createElement(_reactTinymce2.default, {
+                                content: this.props.post.abstract,
+                                config: {
+                                    menubar: false,
+                                    statusbar: false,
+                                    plugins: 'link image code',
+                                    toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
+
+                                },
+                                onChange: this.handlePostAbstractChange
+                            })
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.FormGroup,
+                        null,
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { componentClass: _reactBootstrap.ControlLabel, sm: 2 },
+                            'Content'
+                        ),
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { sm: 10 },
+                            _react2.default.createElement(_reactTinymce2.default, {
+                                content: this.props.post.content,
+                                config: {
+                                    height: 300,
+                                    theme: 'modern',
+                                    plugins: ['advlist autolink lists link image charmap print preview hr anchor pagebreak', 'searchreplace wordcount visualblocks visualchars code fullscreen', 'insertdatetime media nonbreaking save table contextmenu directionality', 'emoticons template paste textcolor colorpicker textpattern imagetools'],
+                                    toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+                                    toolbar2: 'print preview media | forecolor backcolor emoticons | code'
+                                },
+                                onChange: this.handlePostContentChange
+                            })
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.FormGroup,
+                        null,
+                        _react2.default.createElement(
+                            _reactBootstrap.Col,
+                            { smOffset: 2, sm: 10 },
+                            _react2.default.createElement(
+                                _reactBootstrap.Button,
+                                { onClick: function onClick(e) {
+                                        return _this2.props.onSaveClick(_this2.props.post);
+                                    } },
+                                'Save'
+                            ),
+                            _react2.default.createElement(
+                                _reactBootstrap.Button,
+                                null,
+                                'Preview'
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            if ((this.props.mode == null || this.props.mode == 'view') && this.props.post.postid != null) {
+                return this.renderDisplay();
+            } else if (this.props.mode == 'edit') {
+                return this.renderEdit();
+            } else {
+                return null;
+            }
+        }
+    }]);
+
+    return SinglePostComponent;
+}(_react2.default.Component);
+
+SinglePostComponent.PropTypes = {
+    post: _react2.default.PropTypes.object.isRequired
+};
+
+var _default = SinglePostComponent;
+exports.default = _default;
+;
+
+var _temp = function () {
+    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+        return;
+    }
+
+    __REACT_HOT_LOADER__.register(SinglePostComponent, 'SinglePostComponent', '/home/ubuntu/workspace/app/components/SinglePostComponent.jsx');
+
+    __REACT_HOT_LOADER__.register(_default, 'default', '/home/ubuntu/workspace/app/components/SinglePostComponent.jsx');
+}();
+
+;

@@ -1,0 +1,289 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Get_State_Succeed_Action = exports.Close_Spinner = exports.Open_Spinner = exports.Close_Dialog = exports.Open_Dialog = exports.Login_Fail_Action = exports.Logout_Done_Action = exports.Login_Succeed_Action = exports.Login_Action = undefined;
+exports.Twitter_Login_Start_Action = Twitter_Login_Start_Action;
+exports.Google_Login_Action = Google_Login_Action;
+exports.State_Initialization_Action = State_Initialization_Action;
+exports.Logout_Action = Logout_Action;
+exports.Update_Config_Action = Update_Config_Action;
+exports.Set_Configurations_Action = Set_Configurations_Action;
+
+var _reqwest = require('reqwest');
+
+var _reqwest2 = _interopRequireDefault(_reqwest);
+
+var _global_config = require('../../share/global_config');
+
+var _global_config2 = _interopRequireDefault(_global_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Login_Action = exports.Login_Action = function Login_Action(author, token) {
+  return {
+    type: 'LOGIN',
+    author: author,
+    token: token
+  };
+};
+
+var Login_Succeed_Action = exports.Login_Succeed_Action = function Login_Succeed_Action(userid, displayname) {
+  return {
+    type: 'LOGIN_SUCCEED',
+    userid: userid,
+    displayname: displayname
+  };
+};
+
+var Logout_Done_Action = exports.Logout_Done_Action = function Logout_Done_Action() {
+  return {
+    type: 'LOGOUT'
+  };
+};
+
+var Login_Fail_Action = exports.Login_Fail_Action = function Login_Fail_Action(error) {
+  return {
+    type: 'LOGIN_FAIL',
+    error: error
+  };
+};
+
+function Twitter_Login_Start_Action() {
+  return function (dispatch) {
+    return (0, _reqwest2.default)({
+      url: _global_config2.default.service_root_url + 'api/login',
+      method: 'post',
+      type: 'json',
+      contentType: 'application/x-www-form-urlencoded',
+      data: { "source": "twitter" },
+      error: function error(err) {
+        console.log('Twitter login error = ', err);
+        if (err.status == 200) {
+          window.location = err.responseText;
+          return;
+        }
+        dispatch(Login_Fail_Action(err));
+      },
+      success: function success(response) {
+        //dispatch(Login_Succeed_Action(response.userid, response.displayname));
+        window.location = response;
+      }
+
+    });
+  };
+}
+
+function Google_Login_Action(googleReponse) {
+  return function (dispatch) {
+    return (0, _reqwest2.default)({
+      url: _global_config2.default.service_root_url + 'api/login',
+      method: 'post',
+      type: 'json',
+      contentType: 'application/x-www-form-urlencoded',
+      crossOrigin: true,
+      withCredentials: true,
+      data: { "email": googleReponse.profileObj.email, "tokenId": googleReponse.tokenId },
+      error: function error(err) {
+        console.log('Eoooo = ', err);
+        dispatch(Login_Fail_Action(err));
+      },
+      success: function success(response) {
+        console.log('goood = ' + response);
+        dispatch(Login_Succeed_Action(response.userid, response.displayname));
+      }
+
+    });
+  };
+}
+
+/*********************************************************************************/
+var Open_Dialog = exports.Open_Dialog = function Open_Dialog(title, body, onClose) {
+  return {
+    type: 'OPEN_DIALOG',
+    dialogTitle: title,
+    dialogBody: body,
+    onDialogClose: onClose
+  };
+};
+
+var Close_Dialog = exports.Close_Dialog = function Close_Dialog() {
+
+  return {
+    type: 'CLOSE_DIALOG'
+  };
+};
+
+/*********************************************************************************/
+var Open_Spinner = exports.Open_Spinner = function Open_Spinner() {
+  return {
+    type: 'OPEN_SPINNER'
+  };
+};
+
+var Close_Spinner = exports.Close_Spinner = function Close_Spinner() {
+
+  return {
+    type: 'CLOSE_SPINNER'
+  };
+};
+
+/*********************************************************************************/
+
+function State_Initialization_Action(params) {
+  return function (dispatch) {
+    return (0, _reqwest2.default)({
+      url: _global_config2.default.service_root_url + 'api/state',
+      method: 'post',
+      type: 'json',
+      contentType: 'application/x-www-form-urlencoded',
+      data: params,
+      error: function error(err) {
+        console.log('get init state erro = ', err);
+        if (err.status == 200) {
+          window.location = err.responseText;
+          return;
+        }
+        dispatch(Login_Fail_Action(err));
+      },
+      success: function success(response) {
+        console.log('goood = ', response);
+        dispatch(Get_State_Succeed_Action(response));
+
+        if (response != null && response.redirect != null) {
+          window.location = response.redirect;
+        }
+      }
+
+    });
+  };
+}
+
+var Get_State_Succeed_Action = exports.Get_State_Succeed_Action = function Get_State_Succeed_Action(states) {
+  return {
+    type: 'GET_SAVED_STATE_SUCCEED',
+    savedStates: states
+  };
+};
+
+function Logout_Action() {
+  return function (dispatch) {
+    return (0, _reqwest2.default)({
+      url: _global_config2.default.service_root_url + 'api/logout',
+      method: 'post',
+      type: 'json',
+      contentType: 'application/x-www-form-urlencoded',
+      crossOrigin: true,
+      withCredentials: true,
+      error: function error(err) {
+        console.log('Log out error = ', err);
+        dispatch(Login_Fail_Action(err));
+      },
+      success: function success(response) {
+        dispatch(Logout_Done_Action());
+      }
+
+    });
+  };
+}
+
+/****************************************************************************/
+
+function Update_Config_Action(newConfigValue) {
+
+  return function (dispatch) {
+
+    dispatch(Open_Spinner());
+
+    return (0, _reqwest2.default)({
+      url: _global_config2.default.service_root_url + 'api/config',
+      method: 'post',
+      type: 'json',
+      contentType: 'application/x-www-form-urlencoded',
+      crossOrigin: true,
+      data: newConfigValue,
+      withCredentials: true,
+      error: function error(err) {
+        console.log('Update_Config_Action error = ', err);
+
+        dispatch(Close_Spinner());
+      },
+      success: function success(response) {
+
+        console.log('Update_Config_Action good = ', response);
+        dispatch(Close_Spinner());
+      }
+
+    });
+  };
+}
+
+/****************************************************************************/
+
+function Set_Configurations_Action(newConfigValues) {
+
+  dispatch(Open_Spinner());
+
+  return function (dispatch) {
+    return (0, _reqwest2.default)({
+      url: _global_config2.default.service_root_url + 'api/installation',
+      method: 'post',
+      type: 'json',
+      contentType: 'application/x-www-form-urlencoded',
+      crossOrigin: true,
+      data: newConfigValues,
+      withCredentials: true,
+      error: function error(err) {
+        console.log('Update_Config_Action error = ', err);
+
+        dispatch(Close_Spinner());
+      },
+      success: function success(response) {
+
+        console.log('Update_Config_Action good = ', response);
+        dispatch(Close_Spinner());
+      }
+
+    });
+  };
+}
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(Login_Action, 'Login_Action', '/home/ubuntu/workspace/app/actions/UserActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Login_Succeed_Action, 'Login_Succeed_Action', '/home/ubuntu/workspace/app/actions/UserActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Logout_Done_Action, 'Logout_Done_Action', '/home/ubuntu/workspace/app/actions/UserActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Login_Fail_Action, 'Login_Fail_Action', '/home/ubuntu/workspace/app/actions/UserActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Twitter_Login_Start_Action, 'Twitter_Login_Start_Action', '/home/ubuntu/workspace/app/actions/UserActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Google_Login_Action, 'Google_Login_Action', '/home/ubuntu/workspace/app/actions/UserActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Open_Dialog, 'Open_Dialog', '/home/ubuntu/workspace/app/actions/UserActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Close_Dialog, 'Close_Dialog', '/home/ubuntu/workspace/app/actions/UserActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Open_Spinner, 'Open_Spinner', '/home/ubuntu/workspace/app/actions/UserActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Close_Spinner, 'Close_Spinner', '/home/ubuntu/workspace/app/actions/UserActions.jsx');
+
+  __REACT_HOT_LOADER__.register(State_Initialization_Action, 'State_Initialization_Action', '/home/ubuntu/workspace/app/actions/UserActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Get_State_Succeed_Action, 'Get_State_Succeed_Action', '/home/ubuntu/workspace/app/actions/UserActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Logout_Action, 'Logout_Action', '/home/ubuntu/workspace/app/actions/UserActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Update_Config_Action, 'Update_Config_Action', '/home/ubuntu/workspace/app/actions/UserActions.jsx');
+
+  __REACT_HOT_LOADER__.register(Set_Configurations_Action, 'Set_Configurations_Action', '/home/ubuntu/workspace/app/actions/UserActions.jsx');
+}();
+
+;

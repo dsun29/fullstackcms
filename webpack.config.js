@@ -7,7 +7,7 @@ module.exports = {
     devtool: 'inline-source-map',
     entry: [
         'babel-polyfill',
-        './app/components/app.jsx'
+        './app/app.jsx'
     ],
     output: {
         path: './public',

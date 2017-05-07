@@ -1,0 +1,160 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactBootstrap = require('react-bootstrap');
+
+var _reactRouter = require('react-router');
+
+var _Layout = require('../components/Layout');
+
+var _Layout2 = _interopRequireDefault(_Layout);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var EditorPostListComponent = function (_React$Component) {
+    _inherits(EditorPostListComponent, _React$Component);
+
+    function EditorPostListComponent(props) {
+        _classCallCheck(this, EditorPostListComponent);
+
+        var _this = _possibleConstructorReturn(this, (EditorPostListComponent.__proto__ || Object.getPrototypeOf(EditorPostListComponent)).call(this, props));
+
+        _this.props = props;
+        return _this;
+    }
+
+    _createClass(EditorPostListComponent, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            console.log(this.props);
+            this.props.loadPostsByAuthor(this.props.userid);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                _Layout2.default,
+                null,
+                _react2.default.createElement(
+                    _reactBootstrap.Table,
+                    { bordered: true, condensed: true, hover: true },
+                    _react2.default.createElement(
+                        'thead',
+                        null,
+                        _react2.default.createElement(
+                            'tr',
+                            null,
+                            _react2.default.createElement(
+                                'th',
+                                null,
+                                '\xA0'
+                            ),
+                            _react2.default.createElement(
+                                'th',
+                                null,
+                                'Title'
+                            ),
+                            _react2.default.createElement(
+                                'th',
+                                null,
+                                'Status'
+                            ),
+                            _react2.default.createElement(
+                                'th',
+                                null,
+                                'Last Modified'
+                            ),
+                            _react2.default.createElement(
+                                'th',
+                                null,
+                                '\xA0'
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'tbody',
+                        null,
+                        this.props.posts.map(function (post) {
+                            return _react2.default.createElement(
+                                'tr',
+                                { key: post._id },
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    _react2.default.createElement(
+                                        _reactRouter.Link,
+                                        { to: '/post/' + post._id + '?mode=edit' },
+                                        post.url
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    post.title
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    post.published ? 'Published' : 'Saved'
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    post.lastmodified
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    _react2.default.createElement(
+                                        _reactBootstrap.Button,
+                                        { onClick: function onClick() {
+                                                return _this2.props.removePost(post._id);
+                                            } },
+                                        'Remove'
+                                    )
+                                )
+                            );
+                        })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return EditorPostListComponent;
+}(_react2.default.Component);
+
+//TODO: define prop types
+
+var _default = EditorPostListComponent;
+exports.default = _default;
+;
+
+var _temp = function () {
+    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+        return;
+    }
+
+    __REACT_HOT_LOADER__.register(EditorPostListComponent, 'EditorPostListComponent', '/home/ubuntu/workspace/app/components/EditorPostListComponent.jsx');
+
+    __REACT_HOT_LOADER__.register(_default, 'default', '/home/ubuntu/workspace/app/components/EditorPostListComponent.jsx');
+}();
+
+;

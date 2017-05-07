@@ -411,3 +411,9 @@ span.month {
     vertical-align: middle;
     border: 1px solid #eee;
 }
+
+/*****************************************/
+.form-group.required .control-label:after {
+  content:"*";
+  color:red;
+}

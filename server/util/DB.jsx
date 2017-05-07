@@ -1,5 +1,5 @@
 import {MongoClient} from 'mongodb';
-import config from '../server.dev.config';
+import config from '../fullstackcms.config';
 import {ObjectId} from 'mongodb'
 
 class DB{
@@ -7,7 +7,7 @@ class DB{
     static connect() {
         return new Promise((resolve, reject)=>{
         // Use connect method to connect to the Server
-            MongoClient.connect('mongodb://localhost:27017/fullstackrebel', (err, db) => {
+            MongoClient.connect(config.mongo_connection_str, (err, db) => {
                 if (err) {
                     reject(err);
                 } else {

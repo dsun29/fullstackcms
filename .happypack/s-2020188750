@@ -1,0 +1,27 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+var global_config = {
+	locale: 'EN',
+	service_root_url: 'https://men-sundavy.c9users.io/',
+	initial_state: { loading: false, loaded: true }
+
+};
+
+var _default = global_config;
+exports.default = _default;
+;
+
+var _temp = function () {
+	if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+		return;
+	}
+
+	__REACT_HOT_LOADER__.register(global_config, 'global_config', '/home/ubuntu/workspace/share/global_config.jsx');
+
+	__REACT_HOT_LOADER__.register(_default, 'default', '/home/ubuntu/workspace/share/global_config.jsx');
+}();
+
+;

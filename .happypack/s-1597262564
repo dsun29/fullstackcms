@@ -1,0 +1,415 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = require('react-router');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var About = function (_React$Component) {
+    _inherits(About, _React$Component);
+
+    function About() {
+        _classCallCheck(this, About);
+
+        return _possibleConstructorReturn(this, (About.__proto__ || Object.getPrototypeOf(About)).apply(this, arguments));
+    }
+
+    _createClass(About, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'about' },
+                _react2.default.createElement(
+                    'h1',
+                    { className: 'about__heading' },
+                    'About'
+                ),
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    'Welcome to the React Redux Fullstack Starter! To help get you started, here is an overview of what\'s contained here (this information is also available at the ',
+                    _react2.default.createElement(
+                        'a',
+                        { href: 'http://github.com/michaelcheng429/react-redux-fullstack-starter', target: '_blank' },
+                        'GitHub repository'
+                    ),
+                    ':'
+                ),
+                _react2.default.createElement(
+                    'ol',
+                    null,
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'a',
+                            { href: '#gettingstarted' },
+                            'Getting Started'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'a',
+                            { href: '#stack' },
+                            'Stack'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'a',
+                            { href: '#features' },
+                            'Features'
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    'h2',
+                    null,
+                    'Getting Started'
+                ),
+                'Here\'s how you get started:',
+                _react2.default.createElement(
+                    'h4',
+                    null,
+                    'Requirements'
+                ),
+                'Make sure you have node + npm installed. Preferably, use node v5.4.1, since that is the version used to write this starter.',
+                _react2.default.createElement(
+                    'h4',
+                    null,
+                    'Step 1: Get the Repository'
+                ),
+                'There are two ways to download the source code. Both ways will give you the same code.',
+                _react2.default.createElement(
+                    'h5',
+                    null,
+                    'First way: Clone the Repository'
+                ),
+                _react2.default.createElement(
+                    'code',
+                    null,
+                    'git clone git@github.com:michaelcheng429/react-redux-fullstack-starter.git'
+                ),
+                _react2.default.createElement(
+                    'h5',
+                    null,
+                    'Second way: Yeoman Generator'
+                ),
+                _react2.default.createElement(
+                    'ol',
+                    null,
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'code',
+                            null,
+                            'npm install -g yo'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'code',
+                            null,
+                            'npm install -g generator-react-redux-fullstack'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        'In your app\'s folder: ',
+                        _react2.default.createElement(
+                            'code',
+                            null,
+                            'yo react-redux-fullstack'
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    'h4',
+                    null,
+                    'Step 2: Install Dependences'
+                ),
+                _react2.default.createElement(
+                    'code',
+                    null,
+                    'npm i'
+                ),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement('br', null),
+                'Using the yeoman generator should install the dependencies automatically.',
+                _react2.default.createElement(
+                    'h4',
+                    null,
+                    'Step 3: Start the webpack-dev-server to view the app and start developing'
+                ),
+                _react2.default.createElement(
+                    'code',
+                    null,
+                    'npm run dev'
+                ),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement('br', null),
+                'Then, go to ',
+                _react2.default.createElement(
+                    'code',
+                    null,
+                    'localhost:8080'
+                ),
+                ' in your browser and start developing with live reload/react hot loading!',
+                _react2.default.createElement(
+                    'h4',
+                    null,
+                    'Step 4: Deploy to Heroku'
+                ),
+                'To easily deploy to Heroku, just follow these simple steps:',
+                _react2.default.createElement(
+                    'ol',
+                    null,
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        'Download the Heroku toolbelt and create a Heroku account'
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        'Log in with ',
+                        _react2.default.createElement(
+                            'code',
+                            null,
+                            'heroku login'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'code',
+                            null,
+                            'git init'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'code',
+                            null,
+                            'heroku create (APPNAME)'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'code',
+                            null,
+                            'git push heroku master'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        'Go to ',
+                        _react2.default.createElement(
+                            'code',
+                            null,
+                            'APPNAME.herokuapp.com'
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    'h2',
+                    { id: 'stack' },
+                    'Stack'
+                ),
+                'This starter includes the following (among other smaller dependencies):',
+                _react2.default.createElement(
+                    'ul',
+                    null,
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'strong',
+                            null,
+                            'React'
+                        ),
+                        ' - Great framework for building scalable, performant web apps'
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'strong',
+                            null,
+                            'react-router'
+                        ),
+                        ' - Routing library for React'
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'strong',
+                            null,
+                            'Redux'
+                        ),
+                        ' - Great philosophy for managing data, data flow, and state with a single state tree'
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'strong',
+                            null,
+                            'Immutable'
+                        ),
+                        ' - Prevents mutation of state. Always return brand new states when state updates.'
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'strong',
+                            null,
+                            'Webpack'
+                        ),
+                        ' - Amazing module bundler that basically replaces Grunt and Gulp'
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'strong',
+                            null,
+                            'webpack-dev-server + react-hot-loader'
+                        ),
+                        ' - Makes development a joy with easy testing and live reload'
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'strong',
+                            null,
+                            'Node + Express'
+                        ),
+                        ' - Asynchronous JavaScript back-end. Node is fast, and Express makes writing Node easier and more fun.'
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'strong',
+                            null,
+                            'Mocha + Chai (testing)'
+                        ),
+                        ' - Great testing framework and assertion library'
+                    )
+                ),
+                _react2.default.createElement(
+                    'h2',
+                    { id: 'features' },
+                    'Features'
+                ),
+                'Why use this starter/stack?',
+                _react2.default.createElement(
+                    'ul',
+                    null,
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'strong',
+                            null,
+                            'React + Redux is awesome'
+                        ),
+                        ' - React and Redux go together beautifully. Uni-directional data flow. Have a single immutable state tree for your app, pass what you need into top level components, and then let these props trickle into lower level, "dumb" components. Know exactly where all data-manipulation happens, and prevent unintended side effects.'
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'strong',
+                            null,
+                            'Isomorphic'
+                        ),
+                        ' - Server side rendering for improved load times and easy server-side routing'
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'strong',
+                            null,
+                            'Save hours of setting up the stack above to work together'
+                        ),
+                        ' - One of the primary obstacles to using this great stack is how long it takes to get set up. Get all of the basics of this stack, without a ton of fancy junk you don\'t want.'
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'strong',
+                            null,
+                            'Comments and examples to help you learn and get started'
+                        ),
+                        ' - There is some complexity to this stack. That\'s why there is so much information here about how to use this stack and this starter.'
+                    ),
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        _react2.default.createElement(
+                            'strong',
+                            null,
+                            'Easy deployment to Heroku'
+                        ),
+                        ' - Everything is set up for you to easily deploy your app to Heroku (or another place of your choice).'
+                    )
+                )
+            );
+        }
+    }]);
+
+    return About;
+}(_react2.default.Component);
+
+var _default = About;
+exports.default = _default;
+;
+
+var _temp = function () {
+    if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+        return;
+    }
+
+    __REACT_HOT_LOADER__.register(About, 'About', '/home/ubuntu/workspace/app/components/About.jsx');
+
+    __REACT_HOT_LOADER__.register(_default, 'default', '/home/ubuntu/workspace/app/components/About.jsx');
+}();
+
+;

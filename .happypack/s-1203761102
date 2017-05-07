@@ -1,0 +1,77 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = require('react-redux');
+
+var _PostDisplayComponent = require('../components/PostDisplayComponent');
+
+var _PostDisplayComponent2 = _interopRequireDefault(_PostDisplayComponent);
+
+var _PostActions = require('../actions/PostActions');
+
+var _UserActions = require('../actions/UserActions');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state, props) {
+	console.log('state - ', state);
+
+	return {
+		userid: state.UserReducer.userid ? state.UserReducer.userid : null,
+		displayname: state.UserReducer.displayname ? state.UserReducer.displayname : 'Guest',
+		post: state.PostReducer.post ? state.PostReducer.post : {},
+		postid: props.params.postid,
+		loading: state.PostReducer.loading
+
+	};
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	return {
+		onSaveClick: function onSaveClick(post) {
+			dispatch((0, _PostActions.Save_Post_Action)(post));
+		},
+		onPreviewClick: function onPreviewClick(post) {
+			dispatch((0, _PostActions.Save_Post_Action)(post));
+		},
+		loadSinglePost: function loadSinglePost(postid) {
+			if (postid == null || postid == '') {
+				dispatch((0, _PostActions.Init_Post_Action)());
+			} else {
+				dispatch((0, _PostActions.Load_Single_Post_Action)(postid));
+			}
+		},
+		resetPost: function resetPost() {
+			dispatch((0, _PostActions.Init_Post_Action)());
+		}
+	};
+};
+
+var PostDisplayContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_PostDisplayComponent2.default);
+
+var _default = PostDisplayContainer;
+exports.default = _default;
+;
+
+var _temp = function () {
+	if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+		return;
+	}
+
+	__REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/home/ubuntu/workspace/app/containers/PostDisplayContainer.jsx');
+
+	__REACT_HOT_LOADER__.register(mapDispatchToProps, 'mapDispatchToProps', '/home/ubuntu/workspace/app/containers/PostDisplayContainer.jsx');
+
+	__REACT_HOT_LOADER__.register(PostDisplayContainer, 'PostDisplayContainer', '/home/ubuntu/workspace/app/containers/PostDisplayContainer.jsx');
+
+	__REACT_HOT_LOADER__.register(_default, 'default', '/home/ubuntu/workspace/app/containers/PostDisplayContainer.jsx');
+}();
+
+;
