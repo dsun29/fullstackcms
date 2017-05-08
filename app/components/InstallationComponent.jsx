@@ -116,7 +116,7 @@ export default class InstallationComponent extends React.Component {
                         <Col sm={9}>
                             <FormControl 
                                 type="text" 
-                                placeholder="88888888888-abcdefghijklmn.apps.googleusercontent.com" 
+                                placeholder="88888888888-abcdefghijklmn.apps.googleusercontent.com, optional" 
                             />
                         </Col>
                     </FormGroup>
